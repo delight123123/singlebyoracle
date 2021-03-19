@@ -5,11 +5,14 @@ server:
 spring:  datasource:    driver-class-name: oracle.jdbc.driver.OracleDriver    url: jdbc:oracle:thin:@localhost:1521/xe    username: singleproject    password: singleproject12
 #jsp 설정  mvc:    view:      prefix: /WEB-INF/views/      suffix: .jsp
 #mail설정  mail:    host: smtp.gmail.com    port: 587    username: glddld4@gmail.com    password: rladlrwn89@
-#파일업로드 설정  servlet:    multipart:      file-size-threshold: 50MB      location: C:/Temp      max-file-size: 100MB      max-request-size: 100MB
+#파일업로드 설정  servlet:    multipart:      file-size-threshold: 50MB      #location: /uploadfiles      max-file-size: 100MB
+      max-request-size: 100MB      enabled: true  output:    ansi:      enabled: always
 
+file:
+  upload-dir: /uploadfiles
+  
 #mybatis 설정
 mybatis:  configuration:    cache-enabled: true    use-generated-keys: false    map-underscore-to-camel-case: true    jdbc-type-for-null: varchar  mapper-locations:  - classpath:mapper/**/*.xml  type-aliases-package: com.single.board
 
-logging:  level:    root: info  file:    name: C:\Users\김익주\Documents/logs/log.txt    #path: C:\Users\김익주\Documents/logs
-
+logging:  level:    root: info  file:    #name: C:\Users\김익주\Documents/logs/log.txt    path: logs
 

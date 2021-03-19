@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mybatis.mapper.reBoard">
+	
+	<insert id="reboardWrite" parameterType="reboardVo">
+		<selectKey order="BEFORE" resultType="int" keyProperty="reboardNo">
+			select reboard_seq.nextval from dual
+		</selectKey>
+		insert into 
+		tbl_reboard(reboard_no, reboard_title, reboard_content, groupno
+		,ckimgup,filename,filesize,originalfilename,userid)
+		
+		values(#{reboardNo},#{reboardTitle},#{reboardContent},#{reboardNo}
+		,#{ckimgup},#{filename},#{filesize},#{originalfilename},#{userid})
+	</insert>
+	
+	<sql id="searchWhere">
+		<if test="searchKeyword!=null and searchKeyword!=''">
+			where ${searchCondition} like '%' || #{searchKeyword} || '%'
+		</if>
+	</sql>
+	
+	<select id="reboardSearch"  parameterType="reboardVo" resultType="reboardVo">
+		select *
+		from
+		(
+		    select rownum as RNUM, A.*
+		    from 
+		    (	
+		    	select * from tbl_reboard
+			    <include refid="searchWhere"></include>
+				order by reboard_no desc
+		    ) A
+		) where RNUM>#{firstRecordIndex} 
+		<![CDATA[
+		and RNUM<=#{firstRecordIndex}+#{recordCountPerPage}
+		]]>
+	</select>
+	
+	<select id="searchTotal" parameterType="reboardVo" resultType="int">
+		select count(*) from tbl_reboard
+		<include refid="searchWhere"></include>
+	</select>
+	
+	<update id="readcountUp" parameterType="int">
+		update tbl_reboard
+		set readcount=readcount+1
+		where reboard_no=#{reNo}
+	</update>
+	
+	<select id="reboardSelByNo" parameterType="int" resultType="reboardVo">
+		select * from tbl_reboard where reboard_no=#{reboardNo}
+	</select>
+	
+	<update id="reboardEdit" parameterType="reboardVo">
+		update tbl_reboard
+		set reboard_title=#{reboardTitle} ,reboard_content=#{reboardContent}
+		,ckimgup=#{ckimgup} ,filename= #{filename}
+		,filesize=#{filesize} ,downcount= #{downcount}
+		,originalfilename=#{originalfilename}
+		where reboard_no= #{reboardNo}
+	</update>
+	
+	<update id="updateSortNo" parameterType="reboardVo">
+		update tbl_reboard 
+		set sortno=sortno+1 
+		where groupno=#{groupno} and sortno>#{sortno}
+	</update>
+	
+	<insert id="reply" parameterType="reboardVo">
+		<selectKey order="BEFORE" resultType="int" keyProperty="reboardNo">
+			select reboard_seq.nextval from dual
+		</selectKey>
+		insert into 
+		tbl_reboard(reboard_no, reboard_title, reboard_content, groupno
+		,step,groupno,sortno,ckimgup,userid)
+		
+		values(#{reboardNo},#{reboardTitle},#{reboardContent},#{groupno}
+		,#{step}+1,#{sortno}+1,#{ckimgup},#{userid})
+	</insert>
+	
+	<parameterMap type="map" id="delParamMap">
+		<parameter property="no" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="groupno" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="step" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+	</parameterMap>
+	<delete id="reboardDel" parameterMap="delParamMap">
+		call delete_reboard(?,?,?)
+	</delete>
+	
+	<update id="downCntUp" parameterType="int">
+		update tbl_reboard
+		set downcount=downcount+1
+		where reboard_no=#{reboardNo}
+	</update>
+</mapper>
+
+
+
+
+
+
+
+
+

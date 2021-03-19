@@ -23,6 +23,25 @@
     <link rel="stylesheet" href="<c:url value='/resources/assets/css/style.css'/>" >
     <!-- End layout styles -->
     <link rel="shortcut icon" href="<c:url value='/resources/assets/images/favicon.png'/>" >
+    <script type="text/javascript">
+	$(function(){
+		$("#userid").focus();
+		
+		$("form[name=frm]").submit(function(){
+			if($("input[name=userid]").val()==''){
+				alert("아이디를 입력하시기 바랍니다.");
+				$("input[name=userid]").focus();
+				event.preventDefault();
+			}else if($("input[name=pwd]").val()==''){
+				alert("비밀번호를 입력하시기 바랍니다.");
+				$("input[name=pwd]").focus();
+				event.preventDefault();
+			}
+		});
+		
+		
+	});
+</script>
   </head>
   <body>
     <div class="container-scroller">
@@ -34,7 +53,7 @@
 
                 <h4>안녕하세요!</h4>
                 <h6 class="font-weight-light">계속 진행하기위해 로그인해주세요.</h6>
-                <form class="pt-3" action="<c:url value='/login'/>" method="post">
+                <form class="pt-3" action="<c:url value='/login'/>" method="post" name="frm">
                   <div class="form-group">
                     <input type="text" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="아이디" name="userid" value="${cookie.chk_userid.value }">
                   </div>
