@@ -119,11 +119,6 @@ position: fixed;
 <script type="text/javascript">
 $(function() {
 	$("#mainBoard").addClass("active");
-	
-	CKEDITOR.replace('bo_content',{height: '300', width: '99%',
-		filebrowserUploadUrl: "<c:url value='/ckimageup'/>"
-	});
-	
 
 	$("#bfsub").click(function() {
 		$("#overray").css("display","block");
