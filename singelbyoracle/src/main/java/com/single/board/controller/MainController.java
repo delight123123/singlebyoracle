@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.single.board.common.PaginationInfo;
 import com.single.board.common.Utility;
+import com.single.board.model.ReboardService;
 import com.single.board.model.ReboardVO;
 
 import lombok.extern.java.Log;
