@@ -4,7 +4,12 @@ server:
 #오라클연결
 spring:  datasource:    driver-class-name: oracle.jdbc.driver.OracleDriver    url: jdbc:oracle:thin:@localhost:1521/xe    username: singleproject    password: singleproject12
 #jsp 설정  mvc:    view:      prefix: /WEB-INF/views/      suffix: .jsp
-#mail설정  mail:    host: smtp.gmail.com    port: 587    username: glddld4@gmail.com    password: rladlrwn89@
+#mail설정  mail:    host: smtp.gmail.com    port: 587    username: glddld4@gmail.com    password: rladlrwn89@    properties:      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 #파일업로드 설정  servlet:    multipart:      file-size-threshold: 50MB      #location: /uploadfiles      max-file-size: 100MB
       max-request-size: 100MB      enabled: true  output:    ansi:      enabled: always
 
