@@ -10,10 +10,10 @@
 		</selectKey>
 		insert into 
 		tbl_reboard(reboard_no, reboard_title, reboard_content, groupno
-		,ckimgup,filename,filesize,originalfilename,userid)
+		,userid)
 		
 		values(#{reboardNo},#{reboardTitle},#{reboardContent},#{reboardNo}
-		,#{ckimgup},#{filename},#{filesize},#{originalfilename},#{userid})
+		,#{userid})
 	</insert>
 	
 	<sql id="searchWhere">
@@ -57,9 +57,6 @@
 	<update id="reboardEdit" parameterType="reboardVo">
 		update tbl_reboard
 		set reboard_title=#{reboardTitle} ,reboard_content=#{reboardContent}
-		,ckimgup=#{ckimgup} ,filename= #{filename}
-		,filesize=#{filesize} ,downcount= #{downcount}
-		,originalfilename=#{originalfilename}
 		where reboard_no= #{reboardNo}
 	</update>
 	
@@ -75,10 +72,9 @@
 		</selectKey>
 		insert into 
 		tbl_reboard(reboard_no, reboard_title, reboard_content, groupno
-		,step,groupno,sortno,ckimgup,userid)
-		
+		,step,groupno,sortno,userid)
 		values(#{reboardNo},#{reboardTitle},#{reboardContent},#{groupno}
-		,#{step}+1,#{sortno}+1,#{ckimgup},#{userid})
+		,#{step}+1,#{sortno}+1,#{userid})
 	</insert>
 	
 	<parameterMap type="map" id="delParamMap">
