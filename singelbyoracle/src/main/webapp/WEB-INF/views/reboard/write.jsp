@@ -13,13 +13,14 @@
 						<input type="text" name="reboardTitle" id="title" class="form-control form-control-fw">
 					</div>
 					<div id="divdiv">
-						<label for="bo_content">내용</label>
-						<textarea id="bo_content" name="reboardContent"></textarea>
+						<label for="content">내용</label>
+						<textarea id="content" name="reboardContent" rows="12" cols="40"></textarea>
 					</div>
 					<div id="divdiv">
-						<label for="upfile">첨부파일</label>
-						<input type="file" name="upfile" id="upfile" class="form-control form-control-fw">
+						<label for="">첨부파일</label><br>
+						<div name="frtfilediv">1. <input type="file" name="upfile1" id="upfile" class="form-control form-control-fw"> </div>
 						
+						<button name="add">+</button><button name="minus">-</button>
 					</div>
 					<div id="lastdiv">
 						<button type="button" class="btn btn-gradient-danger btn-rounded btn-fw" id="bfsub">작성완료</button>
@@ -41,10 +42,14 @@
 
 </div>
 <%@ include file="../inc/mainBottom.jsp" %>
-<script type="text/javascript" src="<c:url value='/resources/ckeditor/ckeditor.js'/>"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" 
+	href="<c:url value='/resources/css/mainstyle.css'/>" />
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/clear.css'/>" />
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/formLayout.css'/>" />
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/mystyle.css'/>" />
 <style type="text/css">
 #overray{
 position: fixed;
