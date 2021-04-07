@@ -15,7 +15,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter{
 				.excludePathPatterns("/register")
 				.excludePathPatterns("/register/idChk")
 				.excludePathPatterns("/register/useremail")
-				.excludePathPatterns("/register/emailcer");
+				.excludePathPatterns("/register/emailcer")
+				;
 	}
 	
 }

@@ -11,7 +11,7 @@ public class ReboardController {
 
 	private final static Logger logger=LoggerFactory.getLogger(ReboardController.class);
 	
-	@RequestMapping(value = "/write", method = RequestMethod.GET)
+	@RequestMapping(value = "/write", method = {RequestMethod.GET , RequestMethod.POST})
 	public Object write() {
 		
 		logger.info("글쓰기 화면 보이기");
