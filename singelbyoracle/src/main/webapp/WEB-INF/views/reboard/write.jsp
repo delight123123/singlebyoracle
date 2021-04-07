@@ -9,18 +9,20 @@
             <form name="write" id="fileform" method="post" action="<c:url value='/write'/>" enctype="multipart/form-data">
 				<fieldset>
 					<div id="aa">
-						<label for="title">제목</label>
+						<label for="title" >제목</label>
 						<input type="text" name="reboardTitle" id="title" class="form-control form-control-fw">
 					</div>
 					<div id="divdiv">
-						<label for="content">내용</label>
-						<textarea id="content" name="reboardContent" rows="12" cols="40"></textarea>
+						<label for="content">내용</label><br>
+						<textarea id="content" name="reboardContent" rows="12" cols="40" class="form-control form-control-fw"></textarea>
 					</div>
 					<div id="divdiv">
-						<label for="">첨부파일</label><br>
-						<div name="frtfilediv">1. <input type="file" name="upfile1" id="upfile" class="form-control form-control-fw"> </div>
+						<label for="">첨부파일</label>
+						<input type="button" name="add" id="add" value="+"><input type="button" name="minus" id="minus" value="-">
+						<br>
+						<div id="frtfilediv">1. <input type="file" name="upfile1" id="upfile" class="form-control form-control-fw"> </div>
 						
-						<button name="add">+</button><button name="minus">-</button>
+						
 					</div>
 					<div id="lastdiv">
 						<button type="button" class="btn btn-gradient-danger btn-rounded btn-fw" id="bfsub">작성완료</button>
@@ -34,7 +36,7 @@
 </div>
 <div class="body-overlay" id="overray">
 <div id="progressdiv">
-	<!-- Ajax Progress Status -->
+	<!-- Ajax 파일 업로드 중 -->
 <div id="viewLoading">
 파일 업로드 중입니다.
 </div>
@@ -117,18 +119,50 @@ position: fixed;
 	text-align: center;
 	color: black;
 }
+#content{
+	width: 90%;
+}
 
 </style>
 
 
 <script type="text/javascript">
 $(function() {
+	
+	$("#minus").hide();
+	
 	$("#mainBoard").addClass("active");
 
 	$("#bfsub").click(function() {
 		$("#overray").css("display","block");
 		$("#overray").css("height","100%");
 		$("#fileform").submit();
+	});
+	
+	var i=1;
+	
+	$("#add").click(function() {
+			if(i==1){
+				$("#frtfilediv").append('<div id="sndfilediv">2. <input type="file" name="upfile1" id="upfile" class="form-control form-control-fw"> </div>');
+				$("#minus").show();
+				i=2;
+			}else if(i==2){
+				$("#sndfilediv").append('<div id="thdfilediv">3. <input type="file" name="upfile1" id="upfile" class="form-control form-control-fw"> </div>');
+				i=3;
+				$("#add").hide();
+			}
+	});
+	
+	$("#minus").click(function() {
+		if(i==3){
+			$("#thdfilediv").remove();
+			$("#add").show();
+			i=2
+		}else if(i==2){
+			$("#sndfilediv").remove();
+			$("#minus").hide();
+			i=1
+		}
 	});
 
 	
