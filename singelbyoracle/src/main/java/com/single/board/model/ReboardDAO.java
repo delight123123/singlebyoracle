@@ -16,4 +16,5 @@ public interface ReboardDAO {
 	int downCntUp(int reboardNo);
 	int reboardFileCnt(int reboardNo);
 	List<UpfileListVO> fileByReboardNo(int reboardNo);
+	int upfilelistInsert(UpfileListVO upfileListVo);
 }

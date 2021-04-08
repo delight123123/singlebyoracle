@@ -6,7 +6,7 @@
 	<div class="card">
 		<div class="card-body">
 		<div>
-            <form name="write" id="fileform" method="post" action="<c:url value='/write'/>" enctype="multipart/form-data">
+            <form name="write" id="fileform" method="post" action="" enctype="multipart/form-data">
 				<fieldset>
 					<div id="aa">
 						<label for="title" >제목</label>
@@ -22,7 +22,9 @@
 				</fieldset>
 			</form>
 		</div>
-		<form id="upfileform">
+		<form id="upfileform" method="post" action="" enctype="multipart/form-data">
+		<fieldset>
+			<input type="text" id="insertno" name="insertno">
 					<div id="divdiv2">
 						<label for="">첨부파일</label>
 						<input type="button" name="add" id="add" value="+"><input type="button" name="minus" id="minus" value="-">
@@ -31,6 +33,7 @@
 						
 						
 					</div>
+					</fieldset>
 		</form>
 		
 		</div>
@@ -136,6 +139,29 @@ position: fixed;
 
 
 <script type="text/javascript">
+function fileup(result) {
+	var formdata = new FormData($('#upfileform')[0]);
+	alert(result);
+	
+	$.ajax({
+		type: "POST", 
+		url:"<c:url value='/fileuplod'/>",
+		data: formdata,
+		processData: false,
+		dataType : "json",
+		contentType: false,
+		async    : false,
+		success:function(){
+			alert("업로드 완료");
+			location.href="<c:url value='/main'/>"
+		},
+		error:function(xhr,status,error){
+			alert("Error : "+status+", "+error);
+		}
+	})
+};
+
+
 $(function() {
 	var i=1;
 	
@@ -146,7 +172,7 @@ $(function() {
 	$("#bfsub").click(function() {
 		$("#overray").css("display","block");
 		$("#overray").css("height","100%");
-		$("#fileform").submit(function() {
+
 
 			$.ajax({
 				url:"<c:url value='/boardWrite'/>",
@@ -154,8 +180,9 @@ $(function() {
 				data: $("form[name=write]").serialize(),
 				success:function(res){
 					alert("글등록");
+					$("#insertno").val(res);
 					fileup(res);
-					location.href="<c:url value='/main'/>"
+					
 				},
 				error:function(xhr,status,error){
 					alert("Error : "+status+", "+error);
@@ -164,7 +191,7 @@ $(function() {
 			
 			
 			});
-		});
+		
 	});
 	
 	
@@ -199,28 +226,7 @@ $(function() {
 	
 });
 
-function fileup(result) {
-	var formdata = new FormData($('#upfileform')[0]);
-	
-	$.ajax({
-		url:"<c:url value='/fileuplod'/>",
-		type: "POST", 
-		enctype: 'multipart/form-data', 
-		data: {
-			formData : formdata,
-			res : result
-		},
-		processData: false,
-		contentType: false,
-		cache: false,
-		success:function(){
-			
-		},
-		error:function(xhr,status,error){
-			alert("Error : "+status+", "+error);
-		}
-	})
-};
+
 
 
 </script>

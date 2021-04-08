@@ -8,8 +8,6 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,10 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.single.board.common.FileUploadUtil;
-import com.single.board.model.ReboardDAO;
 import com.single.board.model.ReboardService;
 import com.single.board.model.ReboardVO;
 import com.single.board.model.UpfileListVO;
@@ -48,9 +44,10 @@ public class ReboardController {
 	
 	@ResponseBody
 	@RequestMapping("/boardWrite")
-	public int boardWrite(@ModelAttribute ReboardVO vo) {
+	public int boardWrite(@ModelAttribute ReboardVO vo,HttpSession session) {
 		int res=0;
-		
+		String userid=(String) session.getAttribute("userid");
+		vo.setUserid(userid);
 		res=reboardService.reboardWrite(vo);
 		
 		if(res!=0) {
@@ -62,23 +59,26 @@ public class ReboardController {
 		return res;
 	}
 	
-	@SuppressWarnings("unchecked")
 	@ResponseBody
 	@RequestMapping("/fileuplod")
-	public ResponseEntity<?> fileupload(@RequestParam("upfile") MultipartFile[] uploadfiles
-			, @RequestParam("res") int res
-			, HttpSession session
-			,HttpServletRequest request) {
+	public int fileupload(HttpServletRequest request,HttpSession session) {
 		
-		List<UpfileListVO> list=fileuploadUtil.fileupload(uploadfiles, request, session);
+		logger.info("파일업로드 시작");
+		int result=Integer.parseInt(request.getParameter("insertno"));
+		logger.info("result={}",result);
 		
-		for(int i=0; i<list.size();i++) {
-			list.get(i).setReboardNo(res);
+		//List<UpfileListVO> list=fileuploadUtil.fileupload(request, session);
+		List<UpfileListVO> list=fileuploadUtil.fileupload(request,session);
+		
+		for(int i=0;i<list.size();i++) {
+			list.get(i).setReboardNo(result);
 		}
+		logger.info("파일 리스트 insert 시작");
+		int res=reboardService.upfilelistInsert(list);
+		logger.info("파일 리스트 insert 결과 res={}",res);
 		
-		//파일 업로드 테이블에 insert
+		return res;
 		
-		return new ResponseEntity("업로드 성공  ", HttpStatus.OK);
 	}
 	
 	@RequestMapping("/readCnt")
