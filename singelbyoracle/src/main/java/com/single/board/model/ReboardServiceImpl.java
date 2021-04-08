@@ -15,7 +15,12 @@ public class ReboardServiceImpl implements ReboardService{
 	
 	@Override
 	public int reboardWrite(ReboardVO reboardVo) {
-		return reboardDao.reboardWrite(reboardVo);
+		System.out.println("담겨오나1?"+reboardVo.getReboardNo());
+		
+		reboardDao.reboardWrite(reboardVo);
+		
+		System.out.println("담겨오나2?"+reboardVo.getReboardNo());
+		return reboardVo.getReboardNo();
 	}
 
 	@Override
@@ -44,7 +49,6 @@ public class ReboardServiceImpl implements ReboardService{
 	}
 
 	@Override
-	@Transactional
 	public int reply(ReboardVO reboardVo) {
 		
 		int cnt=reboardDao.updateSortNo(reboardVo);
@@ -62,6 +66,16 @@ public class ReboardServiceImpl implements ReboardService{
 	@Override
 	public int downCntUp(int reboardNo) {
 		return reboardDao.downCntUp(reboardNo);
+	}
+
+	@Override
+	public int reboardFileCnt(int reboardNo) {
+		return reboardDao.reboardFileCnt(reboardNo);
+	}
+
+	@Override
+	public List<UpfileListVO> fileByReboardNo(int reboardNo) {
+		return reboardDao.fileByReboardNo(reboardNo);
 	}
 	
 }

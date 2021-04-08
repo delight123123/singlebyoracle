@@ -14,4 +14,6 @@ public interface ReboardDAO {
 	int reply(ReboardVO reboardVo);
 	int reboardDel(Map<String, String> map);
 	int downCntUp(int reboardNo);
+	int reboardFileCnt(int reboardNo);
+	List<UpfileListVO> fileByReboardNo(int reboardNo);
 }

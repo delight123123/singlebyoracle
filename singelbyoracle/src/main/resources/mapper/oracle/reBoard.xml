@@ -91,6 +91,15 @@
 		set downcount=downcount+1
 		where reboard_no=#{reboardNo}
 	</update>
+	
+	<select id="reboardFileCnt" resultType="int" parameterType="int">
+		select count(*) from upfile_list where reboard_no=#{reboardNo}
+	</select>
+	
+	<select id="fileByReboardNo" resultType="upfileListVo" parameterType="int">
+		select * from upfile_list where reboard_no=#{reboardNo}
+	</select>
+	
 </mapper>
 
 

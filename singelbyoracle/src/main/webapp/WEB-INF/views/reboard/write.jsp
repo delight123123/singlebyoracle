@@ -5,7 +5,7 @@
 <div class="content-wrapper">
 	<div class="card">
 		<div class="card-body">
-
+		<div>
             <form name="write" id="fileform" method="post" action="<c:url value='/write'/>" enctype="multipart/form-data">
 				<fieldset>
 					<div id="aa">
@@ -16,7 +16,14 @@
 						<label for="content">내용</label><br>
 						<textarea id="content" name="reboardContent" rows="12" cols="40" class="form-control form-control-fw"></textarea>
 					</div>
-					<div id="divdiv">
+					<div id="lastdiv">
+						<button type="button" class="btn btn-gradient-danger btn-rounded btn-fw" id="bfsub">작성완료</button>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		<form id="upfileform">
+					<div id="divdiv2">
 						<label for="">첨부파일</label>
 						<input type="button" name="add" id="add" value="+"><input type="button" name="minus" id="minus" value="-">
 						<br>
@@ -24,12 +31,7 @@
 						
 						
 					</div>
-					<div id="lastdiv">
-						<button type="button" class="btn btn-gradient-danger btn-rounded btn-fw" id="bfsub">작성완료</button>
-					</div>
-				</fieldset>
-			</form>
-
+		</form>
 		
 		</div>
 	</div>
@@ -122,12 +124,20 @@ position: fixed;
 #content{
 	width: 90%;
 }
-
+#divdiv2{
+	clear: both;
+	border-bottom: 1px solid #eee;
+	padding: 5px 0;
+	margin: 0 auto;
+	overflow: auto;
+	width: 90%;
+}
 </style>
 
 
 <script type="text/javascript">
 $(function() {
+	var i=1;
 	
 	$("#minus").hide();
 	
@@ -136,10 +146,28 @@ $(function() {
 	$("#bfsub").click(function() {
 		$("#overray").css("display","block");
 		$("#overray").css("height","100%");
-		$("#fileform").submit();
+		$("#fileform").submit(function() {
+
+			$.ajax({
+				url:"<c:url value='/boardWrite'/>",
+				type: "POST", 
+				data: $("form[name=write]").serialize(),
+				success:function(res){
+					alert("글등록");
+					fileup(res);
+					location.href="<c:url value='/main'/>"
+				},
+				error:function(xhr,status,error){
+					alert("Error : "+status+", "+error);
+				}
+			
+			
+			
+			});
+		});
 	});
 	
-	var i=1;
+	
 	
 	$("#add").click(function() {
 			if(i==1){
@@ -164,9 +192,35 @@ $(function() {
 			i=1
 		}
 	});
+	
+	
+	
 
 	
 });
+
+function fileup(result) {
+	var formdata = new FormData($('#upfileform')[0]);
+	
+	$.ajax({
+		url:"<c:url value='/fileuplod'/>",
+		type: "POST", 
+		enctype: 'multipart/form-data', 
+		data: {
+			formData : formdata,
+			res : result
+		},
+		processData: false,
+		contentType: false,
+		cache: false,
+		success:function(){
+			
+		},
+		error:function(xhr,status,error){
+			alert("Error : "+status+", "+error);
+		}
+	})
+};
 
 
 </script>
