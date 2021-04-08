@@ -77,5 +77,17 @@ public class ReboardServiceImpl implements ReboardService{
 	public List<UpfileListVO> fileByReboardNo(int reboardNo) {
 		return reboardDao.fileByReboardNo(reboardNo);
 	}
+
+	@Override
+	@Transactional
+	public int upfilelistInsert(List<UpfileListVO> list) {
+		int res=0;
+		
+		for(UpfileListVO vo:list) {
+			res=reboardDao.upfilelistInsert(vo);
+		}
+		
+		return res;
+	}
 	
 }

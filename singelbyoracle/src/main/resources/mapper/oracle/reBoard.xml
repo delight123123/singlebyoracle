@@ -100,6 +100,11 @@
 		select * from upfile_list where reboard_no=#{reboardNo}
 	</select>
 	
+	<insert id="upfilelistInsert" parameterType="upfileListVo">
+		insert into upfile_list
+		values(#{fileNo}, #{fileName}, #{fileSize}, default, #{originalFileName}, #{reboardNo});
+	</insert>
+	
 </mapper>
 
 

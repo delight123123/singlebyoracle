@@ -11,7 +11,8 @@ spring:  datasource:    driver-class-name: oracle.jdbc.driver.OracleDriver   
             enable: true
 
 #파일업로드 설정  servlet:    multipart:      file-size-threshold: 50MB      #location: /uploadfiles      max-file-size: 100MB
-      max-request-size: 100MB      enabled: true  output:    ansi:      enabled: always
+      max-request-size: 100MB      enabled: true
+      resolve-lazily: true  output:    ansi:      enabled: always
 
 file:
   upload-dir: /uploadfiles
