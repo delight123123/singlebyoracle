@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class UpfileListVO {
 	private int fileNo;
 	private String fileName;
-	private int filesize;
+	private long filesize;
 	private int downCount;
 	private String originalFileName;
 	private int reboardNo;

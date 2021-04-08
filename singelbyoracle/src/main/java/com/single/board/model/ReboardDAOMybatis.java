@@ -63,4 +63,14 @@ public class ReboardDAOMybatis implements ReboardDAO{
 	public int downCntUp(int reboardNo) {
 		return sqlSession.update(namespace+"downCntUp", reboardNo);
 	}
+
+	@Override
+	public int reboardFileCnt(int reboardNo) {
+		return sqlSession.selectOne(namespace+"reboardFileCnt", reboardNo);
+	}
+
+	@Override
+	public List<UpfileListVO> fileByReboardNo(int reboardNo) {
+		return sqlSession.selectList(namespace+"fileByReboardNo", reboardNo);
+	}
 }
