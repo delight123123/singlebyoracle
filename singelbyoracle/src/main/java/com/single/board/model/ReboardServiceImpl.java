@@ -89,5 +89,10 @@ public class ReboardServiceImpl implements ReboardService{
 		
 		return res;
 	}
+
+	@Override
+	public int fileimg(int reboardNo) {
+		return reboardDao.fileimg(reboardNo);
+	}
 	
 }

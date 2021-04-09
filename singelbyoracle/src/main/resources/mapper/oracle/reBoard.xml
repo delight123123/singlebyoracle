@@ -105,6 +105,10 @@
 		values(#{fileNo}, #{fileName}, #{fileSize}, default, #{originalFileName}, #{reboardNo});
 	</insert>
 	
+	<select id="fileimg" parameterType="int" resultType="int">
+		select count(*) from upfile_list where reboard_no=#{reboardNo}
+	</select>
+	
 </mapper>
 
 

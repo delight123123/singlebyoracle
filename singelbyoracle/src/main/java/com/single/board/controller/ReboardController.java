@@ -69,12 +69,14 @@ public class ReboardController {
 		
 		//List<UpfileListVO> list=fileuploadUtil.fileupload(request, session);
 		List<UpfileListVO> list=fileuploadUtil.fileupload(request,session);
-		
-		for(int i=0;i<list.size();i++) {
-			list.get(i).setReboardNo(result);
+		int res=0;
+		if(list.size()>0) {
+			for(int i=0;i<list.size();i++) {
+				list.get(i).setReboardNo(result);
+			}
+			logger.info("파일 리스트 insert 시작");
+			res=reboardService.upfilelistInsert(list);
 		}
-		logger.info("파일 리스트 insert 시작");
-		int res=reboardService.upfilelistInsert(list);
 		logger.info("파일 리스트 insert 결과 res={}",res);
 		
 		return res;
@@ -116,13 +118,61 @@ public class ReboardController {
 		return "reboard/detail";
 	}
 	
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public Object edit(@RequestParam("no") int reboardNo) {
+	@RequestMapping("/edit")
+	public Object edit(@RequestParam("no") int reboardNo, Model model) {
 		logger.info("게시글 수정 파라미터 reboardNo={}",reboardNo);
 		
+		ReboardVO vo= reboardService.reboardSelByNo(reboardNo);
+		List<UpfileListVO> list=reboardService.fileByReboardNo(reboardNo);
 		
+		model.addAttribute("vo", vo);
+		model.addAttribute("list", list);
 		
 		return "reboard/edit";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/boardUpdate")
+	public int reboardEdit(@ModelAttribute ReboardVO reboardVo) {
+		int res=0;
+		
+		logger.info("글 수정 파라미터 reboardVo={}",reboardVo);
+		
+		res=reboardEdit(reboardVo);
+		logger.info("글 수정 결과 res={}",res);
+		if(res>0) {
+			res=reboardVo.getReboardNo();
+		}
+		
+		return res;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/fileuplodupdate")
+	public int fileupdate(HttpServletRequest request,HttpSession session) {
+		
+		logger.info("파일업데이트 시작");
+		int result=Integer.parseInt(request.getParameter("insertno"));
+		logger.info("result={}",result);
+		
+		//기존 업로드 파일들 삭제 -> FileUploadUtil에 메서드 만들어서
+		
+		
+		//새로운 파일 업로드
+		//List<UpfileListVO> list=fileuploadUtil.fileupload(request, session);
+		List<UpfileListVO> list=fileuploadUtil.fileupload(request,session);
+		int res=0;
+		if(list.size()>0) {
+			for(int i=0;i<list.size();i++) {
+				list.get(i).setReboardNo(result);
+			}
+			logger.info("파일 리스트 insert 시작");
+			res=reboardService.upfilelistInsert(list);
+		}
+		logger.info("파일 리스트 insert 결과 res={}",res);
+		
+		return res;
+		
 	}
 	
 }

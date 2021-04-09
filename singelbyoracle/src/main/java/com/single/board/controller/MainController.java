@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.single.board.common.PaginationInfo;
 import com.single.board.common.Utility;
@@ -51,9 +53,23 @@ public class MainController {
 		
 		logger.info("pagingInfo={}",pagingInfo);
 		
+		
 		model.addAttribute("list", list);
 		model.addAttribute("pagingInfo", pagingInfo);
 		
 		return "Main";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/fileimg")
+	public int fileimg(@RequestParam("reboardNo") int reboardNo) {
+		int res=0;
+		logger.info("파일 이미지 유무 파라미터 reboardNo={}",reboardNo);
+		
+		res=reboardService.fileimg(reboardNo);
+		
+		logger.info("게시물 파일 개수 res={}",res);
+		
+		return res;
 	}
 }
