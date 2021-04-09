@@ -6,7 +6,7 @@
 	<div class="card">
 		<div class="card-body">
 
-            <form name="write" id="fileform" method="post" action="<c:url value='/edit'/>" enctype="multipart/form-data">
+            <form name="write" id="fileform" method="post" action="" enctype="multipart/form-data">
 				<fieldset>
 					<div id="aa">
 						<label for="title">제목</label>
@@ -14,22 +14,37 @@
 					</div>
 					<div id="divdiv">
 						<label for="bo_content">내용</label>
-						<textarea id="bo_content" name="reboardContent"></textarea>
+						<textarea id="bo_content" name="reboardContent" >${vo.reboardContent } </textarea>
 					</div>
-					<div id="divdiv">
-						<label for="upfile">첨부파일<sup>(파일 새로 선택 시 이전 파일은 삭제)</sup></label>
-						<input type="file" name="upfile" id="upfile" class="form-control form-control-fw">
-						<hr>
-						<label for="beforeupfile">이미올려진 파일</label>
-						<p id="beforeupfile">${vo.originalfilename }</p>
+			<div id="lastdiv">
+						<button type="button" class="btn btn-gradient-danger btn-rounded btn-fw" id="bfsub">수정</button>
 					</div>
-					<div id="lastdiv">
-						<button type="button" class="btn btn-gradient-danger btn-rounded btn-fw" id="bfsub">수정완료</button>
-					</div>
-					<input type="hidden" name="brfck" id="brfck">
-					<input type="hidden" name="boardNo" id="boardNo" value="${vo.reboardNo }">
+					<input type="hidden" name="reboardNo" id="reboardNo" value="${vo.reboardNo }">
 				</fieldset>
 			</form>
+			<form id="upfileform" method="post" action="" enctype="multipart/form-data">
+		<fieldset>
+			<input type="text" id="insertno" name="insertno" value="${vo.reboardNo }">
+					<div id="divdiv2">
+						<label for="upfile">첨부파일<sup>(파일 새로 선택 시 이전 파일은 모두 삭제)</sup></label>
+						<input type="button" name="add" id="add" value="+"><input type="button" name="minus" id="minus" value="-">
+						<br>
+						<div id="frtfilediv">1. <input type="file" name="upfile1" id="upfile" class="form-control form-control-fw"> </div>
+						
+						<c:if test="${!empty list }">
+							<c:forEach var="vo2" items="${list }">
+								<hr>
+								<label for="beforeupfile">이미올려진 파일</label>
+								<p id="beforeupfile">${vo2.originalFileName }</p>
+							</c:forEach>
+						</c:if>
+						
+						
+					</div>
+					</fieldset>
+		</form>
+					
+					
 
 		
 		</div>
@@ -134,47 +149,106 @@ position: fixed;
         transition: .6s ease;
         z-index: 1000;
 }
-
+#divdiv2{
+	clear: both;
+	border-bottom: 1px solid #eee;
+	padding: 5px 0;
+	margin: 0 auto;
+	overflow: auto;
+	width: 90%;
+}
 </style>
 
 
 <script type="text/javascript">
+function fileup(result) {
+	var formdata = new FormData($('#upfileform')[0]);
+	alert(result);
+	
+	$.ajax({
+		type: "POST", 
+		url:"<c:url value='/fileuplodupdate'/>",
+		data: formdata,
+		processData: false,
+		dataType : "json",
+		contentType: false,
+		async    : false,
+		success:function(){
+			alert("업로드 완료");
+			location.href="<c:url value='/main'/>"
+		},
+		error:function(xhr,status,error){
+			alert("Error : "+status+", "+error);
+		}
+	})
+};
+
+
 $(function() {
+	var i=1;
+	
+	$("#minus").hide();
+	
 	$("#mainBoard").addClass("active");
-	
-	
-	
-	CKEDITOR.replace('bo_content',{height: '300', width: '99%',
-		filebrowserUploadUrl: "<c:url value='/ckimageup'/>"
-	});
-	
-	CKEDITOR.instances.bo_content.setData($("#viewLoading2").html());
 
 	$("#bfsub").click(function() {
-		
 		$("#overray").css("display","block");
 		$("#overray").css("height","100%");
+
+
+			$.ajax({
+				url:"<c:url value='/boardUpdate'/>",
+				type: "POST", 
+				data: $("form[name=write]").serialize(),
+				success:function(res){
+					alert("글 수정");
+					$("#insertno").val(res);
+					fileup(res);
+					
+				},
+				error:function(xhr,status,error){
+					alert("Error : "+status+", "+error);
+				}
+			
+			
+			
+			});
 		
-		var im=img_find();
-		
-		$("#brfck").val(im);
-		
-		$("#fileform").submit();
 	});
+	
+	
+	
+	$("#add").click(function() {
+			if(i==1){
+				$("#frtfilediv").append('<div id="sndfilediv">2. <input type="file" name="upfile1" id="upfile" class="form-control form-control-fw"> </div>');
+				$("#minus").show();
+				i=2;
+			}else if(i==2){
+				$("#sndfilediv").append('<div id="thdfilediv">3. <input type="file" name="upfile1" id="upfile" class="form-control form-control-fw"> </div>');
+				i=3;
+				$("#add").hide();
+			}
+	});
+	
+	$("#minus").click(function() {
+		if(i==3){
+			$("#thdfilediv").remove();
+			$("#add").show();
+			i=2
+		}else if(i==2){
+			$("#sndfilediv").remove();
+			$("#minus").hide();
+			i=1
+		}
+	});
+	
+	
+	
 
 	
 });
 
-function img_find() {
-    var imgs = $("#viewLoading2 img");
-    var imgSrcs = [];
 
-    for (var i = 0; i < imgs.length; i++) {
-        imgSrcs.push(imgs[i].src);
-    }
-
-    return imgSrcs;
-}
 
 
 </script>

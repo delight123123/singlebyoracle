@@ -21,15 +21,26 @@
 		</div>
 		<div>
 			<span class="sp1">첨부파일</span> 
-			<span>
-			<c:if test="${!empty vo.originalfilename }">
+			
+			<%-- <c:if test="${!empty vo.originalfilename }"> 업로드파일리스트 list
 			<img src="<c:url value='/resources/images/file.gif'/>">
 			 <a href="<c:url value='/download?no=${vo.reboardNo}&filename=${vo.filename}'/>">
 			 ${vo.originalfilename }
 			 </a>
 			  다운 : ${vo.downcount }
+			</c:if> --%>
+			<c:if test="${!empty list }">
+				<c:forEach var="vo2" items="${list}">
+					<span>
+						<img src="<c:url value='/resources/images/file.gif'/>">
+						<a href="<c:url value='/download?no=${vo2.fileNo}&filename=${vo2.fileName}'/>">
+						 ${vo2.originalFileName }
+						</a>
+						다운 : ${vo2.downCount }
+					</span><br>
+				</c:forEach>
 			</c:if>
-			</span>
+			
 		</div>
 
 		<div class="lastDiv">		

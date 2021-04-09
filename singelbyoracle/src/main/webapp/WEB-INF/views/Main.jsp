@@ -58,9 +58,28 @@
 								<img src="<c:url value='/resources/images/re.gif'/>">
 							</c:if>
 							</c:forEach>					
-							<c:if test="${fn:length(vo.filename)>0 }">
+							<%-- <c:if test="${fn:length(vo.filename)>0 }">   no받아서 ajax처리해서 file있는지 수 세서 넣기
 								<img src="<c:url value='/resources/images/file.gif'/>">
-							</c:if>
+							</c:if> --%>
+							<script type="text/javascript">
+							var no=${vo.reboardNo};
+							
+							$.ajax({
+								type: "POST", 
+								url:"<c:url value='/fileimg'/>",
+								data: {
+									reboardNo : no
+								},
+								success:function(res){
+									if(res>0){
+										<img src="<c:url value='/resources/images/file.gif'/>">
+									}
+								},
+								error:function(xhr,status,error){
+									alert("Error : "+status+", "+error);
+								}
+							})
+							</script>
 							
 							<a href="<c:url value='/readCnt?reNo=${vo.reboardNo }'/>" >
 								<!-- 제목이 긴 경우 일부만 보여주기-->

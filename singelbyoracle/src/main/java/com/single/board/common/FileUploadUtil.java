@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -23,6 +24,9 @@ import com.single.board.model.UpfileListVO;
 @Component
 public class FileUploadUtil {
 	private final static Logger logger = LoggerFactory.getLogger(FileUploadUtil.class);
+	
+	@Value("${file.upload-dir}")
+	private String path;
 
 	public List<UpfileListVO> fileupload(MultipartFile[] uploadfiles, HttpServletRequest request, HttpSession session) {
 		logger.info("파일 업로드 시작");
@@ -125,11 +129,12 @@ public class FileUploadUtil {
 	
 	public String getFilePath(HttpServletRequest request, HttpSession session) {
 		// 업로드할 경로 구하기
-		String path = "";
+		//String path = "";
 		String userid = (String) session.getAttribute("userid");
 		FileuploadProperties fileProper = new FileuploadProperties();
-		path = fileProper.getUploadDir();
-		path = request.getSession().getServletContext().getRealPath(path) + "/" + userid;
+		//path = fileProper.getUploadDir();
+		//path = request.getSession().getServletContext().getRealPath(path) + "/" + userid;
+		path = path + "/" + userid;
 
 		// config.getServletContext().getRealPath(upDir);
 		logger.info("업로드 경로  path={}", path);
@@ -153,4 +158,6 @@ public class FileUploadUtil {
 
 		return fileName;
 	}
+	
+	
 }

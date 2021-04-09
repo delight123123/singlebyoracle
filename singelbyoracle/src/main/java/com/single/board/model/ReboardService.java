@@ -16,4 +16,5 @@ public interface ReboardService {
 	int reboardFileCnt(int reboardNo);
 	List<UpfileListVO> fileByReboardNo(int reboardNo);
 	int upfilelistInsert(List<UpfileListVO> list);
+	int fileimg(int reboardNo);
 }
