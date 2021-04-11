@@ -5,25 +5,25 @@
 <div class="content-wrapper">
 	<div class="card">
 		<div class="card-body">
-
+            <div>
             <form name="write" id="fileform" method="post" action="" enctype="multipart/form-data">
 				<fieldset>
 					<div id="aa">
-						<label for="title">제목</label>
+						<label for="title" >제목</label>
 						<input type="text" name="reboardTitle" id="title" class="form-control form-control-fw" value="${vo.reboardTitle }">
 					</div>
 					<div id="divdiv">
-						<label for="bo_content">내용</label>
-						<textarea id="bo_content" name="reboardContent" >${vo.reboardContent } </textarea>
+						<label for="content">내용</label><br>
+						<textarea id="content" name="reboardContent" rows="12" cols="40" class="form-control form-control-fw">${vo.reboardContent }</textarea>
 					</div>
-			<div id="lastdiv">
-						<button type="button" class="btn btn-gradient-danger btn-rounded btn-fw" id="bfsub">수정</button>
+					<div id="lastdiv">
+						<button type="button" class="btn btn-gradient-danger btn-rounded btn-fw" id="bfsub">작성완료</button>
 					</div>
-					<input type="hidden" name="reboardNo" id="reboardNo" value="${vo.reboardNo }">
 				</fieldset>
 			</form>
-			<form id="upfileform" method="post" action="" enctype="multipart/form-data">
-		<fieldset>
+			</div>
+		<form id="upfileform" method="post" action="" enctype="multipart/form-data">
+			<fieldset>
 			<input type="text" id="insertno" name="insertno" value="${vo.reboardNo }">
 					<div id="divdiv2">
 						<label for="upfile">첨부파일<sup>(파일 새로 선택 시 이전 파일은 모두 삭제)</sup></label>
@@ -41,7 +41,7 @@
 						
 						
 					</div>
-					</fieldset>
+			</fieldset>
 		</form>
 					
 					
@@ -58,16 +58,17 @@
 </div>
 </div>
 </div>
-<div>
-<div id="viewLoading2">
-${vo.reboardContent }
-</div>
-</div>
+
 <%@ include file="../inc/mainBottom.jsp" %>
 <script type="text/javascript" src="<c:url value='/resources/ckeditor/ckeditor.js'/>"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" 
+	href="<c:url value='/resources/css/mainstyle.css'/>" />
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/clear.css'/>" />
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/formLayout.css'/>" />
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/mystyle.css'/>" />
 <style type="text/css">
 #overray{
 position: fixed;

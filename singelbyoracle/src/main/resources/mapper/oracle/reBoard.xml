@@ -101,8 +101,11 @@
 	</select>
 	
 	<insert id="upfilelistInsert" parameterType="upfileListVo">
+		<selectKey order="BEFORE" resultType="int" keyProperty="fileNo">
+			select fileno_seq.nextval from dual
+		</selectKey>
 		insert into upfile_list
-		values(#{fileNo}, #{fileName}, #{fileSize}, default, #{originalFileName}, #{reboardNo});
+		values(#{fileNo}, #{fileName}, #{filesize}, default, #{originalFileName}, #{reboardNo})
 	</insert>
 	
 	<select id="fileimg" parameterType="int" resultType="int">
