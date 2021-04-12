@@ -135,6 +135,11 @@ public class FileUploadUtil {
 		//path = fileProper.getUploadDir();
 		//path = request.getSession().getServletContext().getRealPath(path) + "/" + userid;
 		path = path + "/" + userid;
+		path=request.getSession().getServletContext().getRealPath(path);
+		File folder=new File(path);
+		if(!folder.exists()) {
+			folder.mkdirs();
+		}
 
 		// config.getServletContext().getRealPath(upDir);
 		logger.info("업로드 경로  path={}", path);

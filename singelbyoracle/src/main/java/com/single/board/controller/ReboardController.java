@@ -112,7 +112,7 @@ public class ReboardController {
 			
 			List<UpfileListVO> list=reboardService.fileByReboardNo(reboardNo);
 			logger.info("게시글 업로드파일들 list={}",list);
-			model.addAttribute("upfilelist", list);
+			model.addAttribute("list", list);
 		}
 		
 		logger.info("상세 보기 검색 결과 vo={}",vo);
@@ -160,7 +160,6 @@ public class ReboardController {
 		logger.info("result={}",result);
 
 		//새로운 파일 업로드
-		//List<UpfileListVO> list=fileuploadUtil.fileupload(request, session);
 		List<UpfileListVO> list=fileuploadUtil.fileupload(request,session);
 		int res=0;
 		if(list.size()>0) {
