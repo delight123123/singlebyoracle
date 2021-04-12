@@ -18,4 +18,5 @@ public interface ReboardDAO {
 	List<UpfileListVO> fileByReboardNo(int reboardNo);
 	int upfilelistInsert(UpfileListVO upfileListVo);
 	int fileimg(int reboardNo);
+	UpfileListVO fileOneSel(int fileNo);
 }

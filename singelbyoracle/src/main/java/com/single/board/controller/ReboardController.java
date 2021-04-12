@@ -1,6 +1,9 @@
 package com.single.board.controller;
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.single.board.common.FileUploadUtil;
 import com.single.board.model.ReboardService;
@@ -154,10 +158,7 @@ public class ReboardController {
 		logger.info("파일업데이트 시작");
 		int result=Integer.parseInt(request.getParameter("insertno"));
 		logger.info("result={}",result);
-		
-		//기존 업로드 파일들 삭제 -> FileUploadUtil에 메서드 만들어서
-		
-		
+
 		//새로운 파일 업로드
 		//List<UpfileListVO> list=fileuploadUtil.fileupload(request, session);
 		List<UpfileListVO> list=fileuploadUtil.fileupload(request,session);
@@ -168,6 +169,9 @@ public class ReboardController {
 			}
 			logger.info("파일 리스트 insert 시작");
 			res=reboardService.upfilelistInsert(list);
+			List<UpfileListVO> delList=reboardService.fileByReboardNo(result);
+			boolean delRes=fileuploadUtil.fileDel(delList, session, request);
+			logger.info("기존 파일 삭제 결과 delRes={}",delRes);
 		}
 		logger.info("파일 리스트 insert 결과 res={}",res);
 		
@@ -175,4 +179,100 @@ public class ReboardController {
 		
 	}
 	
+	@RequestMapping("/delete")
+	public Object reboardDel(@RequestParam("no") int reboardNo,HttpSession session
+			,HttpServletRequest request,Model model) {
+		logger.info("게시물 삭제 파라미터 no={}",reboardNo);
+		
+		ReboardVO vo=reboardService.reboardSelByNo(reboardNo);
+		List<UpfileListVO> list=reboardService.fileByReboardNo(reboardNo);
+		
+		Map<String, String> map=new HashMap<String, String>();
+		map.put("no", Integer.toString(reboardNo));
+		map.put("groupno", Integer.toString(vo.getGroupno()));
+		map.put("step", Integer.toString(vo.getStep()));
+		int res=0;
+		
+		res=reboardService.reboardDel(map);
+		
+		logger.info("게시글 삭제 결과 res={}",res);
+		
+		String url, msg="";
+		if(res>0) {
+			url="/main";
+			msg="해당 게시글이 삭제되었습니다.";
+		}else {
+			url="/detail?reboardNo="+reboardNo;
+			msg="게시글 삭제에 실패하였습니다.";
+		}
+		
+		//게시글 파일 삭제
+		boolean delRes=fileuploadUtil.fileDel(list, session, request);
+		
+		logger.info("게시글 파일 삭제 결과 delRes={}",delRes);
+		
+		model.addAttribute("url", url);
+		model.addAttribute("msg", msg);
+		
+		return "common/message";
+	}
+	
+	@RequestMapping("/download")
+	public ModelAndView fileDownload(@RequestParam int no, @RequestParam String filename
+			,HttpServletRequest request,HttpSession session) {
+		
+		logger.info("다운로드 처리 파라미터 no={},filename={}",no,filename);
+		int res=0;
+		//다운 수 올리기
+		res=reboardService.downCntUp(no);
+		
+		logger.info("다운 수 증가 결과 res={}",res);
+		
+		UpfileListVO vo=reboardService.fileOneSel(no);
+		
+		logger.info("다운로드할 파일 정보 vo={}",vo);
+		
+		String path=fileuploadUtil.getFilePath(request, session);
+		
+		File file=new File(path, filename);
+		
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("file", file);
+		
+		ModelAndView mav=new ModelAndView("reBoardDownloadView", map);
+		
+		return mav;
+		
+	}
+	
+	@RequestMapping(value = "/reply", method = RequestMethod.GET)
+	public Object replayGet(@RequestParam int no,Model model) {
+		logger.info("답글 달기 화면 보이기 파라미터 no={}",no);
+		
+		ReboardVO vo=reboardService.reboardSelByNo(no);
+		
+		logger.info("답글 달리는 게시물 vo={}",vo);
+		
+		model.addAttribute("vo", vo);
+		
+		return "reboard/replay";
+	}
+	
+	@RequestMapping(value = "/reply", method = RequestMethod.POST)
+	public Object replayPost(@ModelAttribute ReboardVO vo,Model model) {
+		logger.info("답글 달기 파라미터 vo={}",vo);
+		
+		int res=reboardService.reply(vo);
+		
+		logger.info("답글 달기 결과 res={}",res);
+		
+		if(res>0) {
+			return "redirect:/main";
+		}else {
+			model.addAttribute("url", "/edit?no="+vo.getReboardNo());
+			model.addAttribute("msg", "답글 달기 실패");
+			return "common/message";
+		}//if
+		
+	}
 }

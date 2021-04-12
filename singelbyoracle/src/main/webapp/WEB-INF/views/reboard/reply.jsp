@@ -10,17 +10,16 @@
             <input type="text" name="groupno" value="${vo.groupno }">
 			<input type="text" name="step" value="${vo.step }">
 			<input type="text" name="sortno" value="${vo.sortno }">
-			<input type="text" name="no" value="${vo.reboardNo }">
+			<input type="text" name="reboardNo" value="${vo.reboardNo }">
 				<fieldset>
 					<div id="aa">
-						<label for="title">제목</label>
-						<input type="text" name="reboardTitle" id="title" class="form-control form-control-fw" value="${vo.reboardTitle }">
+						<label for="title" >제목</label>
+						<input type="text" name="reboardTitle" id="title" class="form-control form-control-fw">
 					</div>
 					<div id="divdiv">
-						<label for="bo_content">내용</label>
-						<textarea id="bo_content" name="reboardContent"></textarea>
+						<label for="content">내용</label><br>
+						<textarea id="content" name="reboardContent" rows="12" cols="40" class="form-control form-control-fw"></textarea>
 					</div>
-
 					<div id="lastdiv">
 						<button type="button" class="btn btn-gradient-danger btn-rounded btn-fw" id="bfsub">작성완료</button>
 					</div>
@@ -31,44 +30,13 @@
 		</div>
 	</div>
 </div>
-<div class="body-overlay" id="overray">
-<div id="progressdiv">
-	<!-- Ajax Progress Status -->
-<div id="viewLoading">
-${vo.reboardContent }
-</div>
-</div>
-</div>
+
 <%@ include file="../inc/mainBottom.jsp" %>
 <script type="text/javascript" src="<c:url value='/resources/ckeditor/ckeditor.js'/>"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <style type="text/css">
-#overray{
-position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        overflow: hidden;
-        width: 100%;
-        height: 0;
-        color: #fff;
-        background: rgba(0, 0, 0, 0.6);
-        -webkit-transition: .6s ease;
-        transition: .6s ease;
-        z-index: 1000;
-}
-#progressdiv{
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-        text-align: center;
-        height: 100%;
-}
 #fileform{
 	width: 100%;
 	margin: 0 auto;
@@ -86,9 +54,9 @@ position: fixed;
 		clear: left;		
 		font-weight: bold;
 }
-#bo_content{
+#content{
 	overflow: hidden;
-	width: 10%;
+	width: 90%;
 }
 #fileform fieldset{
 	width: 90%;
@@ -103,14 +71,7 @@ position: fixed;
 #lastdiv{
 	text-align: center;
 }
-#viewLoading{
-	background-color: white;
-	display: block;
-	background-size: cover;
-	margin-top: 50%;
-	text-align: center;
-	color: black;
-}
+
 
 </style>
 
@@ -118,11 +79,6 @@ position: fixed;
 <script type="text/javascript">
 $(function() {
 	$("#mainBoard").addClass("active");
-	
-	CKEDITOR.replace('bo_content',{height: '300', width: '99%',
-		filebrowserUploadUrl: "<c:url value='/ckimageup'/>"
-	});
-	CKEDITOR.instances.bo_content.setData($("#viewLoading").html());
 
 	$("#bfsub").click(function() {
 

@@ -87,9 +87,9 @@
 	</delete>
 	
 	<update id="downCntUp" parameterType="int">
-		update tbl_reboard
+		update upfile_list
 		set downcount=downcount+1
-		where reboard_no=#{reboardNo}
+		where fileno=#{fileNo}
 	</update>
 	
 	<select id="reboardFileCnt" resultType="int" parameterType="int">
@@ -107,6 +107,10 @@
 	
 	<select id="fileimg" parameterType="int" resultType="int">
 		select count(*) from upfile_list where reboard_no=#{reboardNo}
+	</select>
+	
+	<select id="fileOneSel" resultType="upfileListVo" parameterType="int">
+		select * from upfile_list where fileno=#{fileNo}
 	</select>
 	
 </mapper>

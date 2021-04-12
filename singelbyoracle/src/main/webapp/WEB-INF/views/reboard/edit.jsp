@@ -16,7 +16,7 @@
 						<label for="bo_content">내용</label>
 						<textarea id="bo_content" name="reboardContent" >${vo.reboardContent } </textarea>
 					</div>
-			<div id="lastdiv">
+					<div id="lastdiv">
 						<button type="button" class="btn btn-gradient-danger btn-rounded btn-fw" id="bfsub">수정</button>
 					</div>
 					<input type="hidden" name="reboardNo" id="reboardNo" value="${vo.reboardNo }">
