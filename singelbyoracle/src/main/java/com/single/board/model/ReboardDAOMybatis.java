@@ -83,4 +83,9 @@ public class ReboardDAOMybatis implements ReboardDAO{
 	public int fileimg(int reboardNo) {
 		return sqlSession.selectOne(namespace+"fileimg", reboardNo);
 	}
+
+	@Override
+	public UpfileListVO fileOneSel(int fileNo) {
+		return sqlSession.selectOne(namespace+"fileOneSel", fileNo);
+	}
 }

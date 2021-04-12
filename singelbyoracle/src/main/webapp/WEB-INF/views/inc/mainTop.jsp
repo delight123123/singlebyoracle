@@ -102,8 +102,8 @@
 
 			<!-- 날씨 -->
 			<li class="nav-item" id="weather">
-              <a class="nav-link z" href="<c:url value=''/>">
-                <span class="menu-title">지역별 날씨</span>
+              <a class="nav-link z" href="<c:url value='/weather'/>">
+                <span class="menu-title">날씨</span>
                 <i class="mdi mdi-brightness-5 menu-icon"></i>
               </a>
             </li>

@@ -99,10 +99,7 @@ position: fixed;
 		clear: left;		
 		font-weight: bold;
 }
-#bo_content{
-	overflow: hidden;
-	width: 10%;
-}
+
 #fileform fieldset{
 	width: 90%;
 		padding: 0;
@@ -125,6 +122,7 @@ position: fixed;
 	color: black;
 }
 #content{
+	overflow: hidden;
 	width: 90%;
 }
 #divdiv2{

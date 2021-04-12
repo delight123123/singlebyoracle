@@ -99,7 +99,7 @@ public class FileUploadUtil {
 
 				// 업로드 처리
 				// 업로드할 경로 구하기
-				String upPath = getFilePath(request, session);
+				String upPath = getFilePath(request, session);				
 
 				File file = new File(upPath, fileName);
 
@@ -165,4 +165,21 @@ public class FileUploadUtil {
 	}
 	
 	
+	public boolean fileDel(List<UpfileListVO> list, HttpSession session,HttpServletRequest request) {
+		boolean res=false;
+		
+		String path=getFilePath(request, session);
+		
+		for(UpfileListVO vo:list) {
+			String fileName=vo.getFileName();
+			
+			File delfile=new File(path, fileName);
+			if(delfile.exists()||delfile.canRead()) {
+				res=delfile.delete();
+			}//if
+		}//for
+		
+		
+		return res;
+	}
 }

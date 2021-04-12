@@ -17,7 +17,7 @@
 						<textarea id="content" name="reboardContent" rows="12" cols="40" class="form-control form-control-fw">${vo.reboardContent }</textarea>
 					</div>
 					<div id="lastdiv">
-						<button type="button" class="btn btn-gradient-danger btn-rounded btn-fw" id="bfsub">작성완료</button>
+						<button type="button" class="btn btn-gradient-danger btn-rounded btn-fw" id="bfsub">수정</button>
 					</div>
 				</fieldset>
 			</form>

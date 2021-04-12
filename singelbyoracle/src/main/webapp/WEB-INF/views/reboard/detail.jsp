@@ -75,7 +75,7 @@ $(function() {
 	
 	$("#delA").click(function() {
 		if(alert("삭제 하시겠습니까?")){
-			location.href='<c:url value="/delete?no=${param.reboardNo }&groupno=${vo.groupno }&step=${vo.step }"/>';
+			location.href='<c:url value="/delete?no=${param.reboardNo }"/>';
 		}
 	});
 

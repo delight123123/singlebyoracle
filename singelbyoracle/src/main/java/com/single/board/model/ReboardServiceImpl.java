@@ -94,5 +94,10 @@ public class ReboardServiceImpl implements ReboardService{
 	public int fileimg(int reboardNo) {
 		return reboardDao.fileimg(reboardNo);
 	}
+
+	@Override
+	public UpfileListVO fileOneSel(int fileNo) {
+		return reboardDao.fileOneSel(fileNo);
+	}
 	
 }

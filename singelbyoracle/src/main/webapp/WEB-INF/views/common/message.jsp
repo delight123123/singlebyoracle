@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>message.jsp</title>
+<title></title>
 </head>
 <body>
 <%
