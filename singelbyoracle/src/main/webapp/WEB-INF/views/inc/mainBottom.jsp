@@ -1,5 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+    
+    <div id="weatherdiv">
+    	<form action="<c:url value='/weather'/>" method="post" name="wearthfrm">
+    		<fieldset>
+    			<input value="" type="number" id="xx" name="xx">
+				<input value="" type="number" id="yy" name="yy">
+    		</fieldset>
+    	</form>
+    </div>
          <!-- ì¬ê¸°ë¶í° bottom -->
           <!-- partial:../../partials/_footer.html -->
           <footer class="footer">
@@ -18,6 +28,11 @@
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script src="<c:url value='/resources/assets/vendors/js/vendor.bundle.base.js'/>" ></script>
+    <style type="text/css">
+    	#weatherdiv{
+    		height: 0%;
+    	}
+    </style>
     <!-- endinject -->
     <!-- Plugin js for this page -->
     <!-- End plugin js for this page -->
@@ -37,6 +52,26 @@
 		$("#pwdcg").click(function() {
 			window.open("","pwdCg",
 			"width=500,height=500,left=0,top=0,location=yes,resizable=yes");
+		});
+		
+		
+		$("#weathergo").click(function() {
+			if (navigator.geolocation) {
+			    //위치 정보를 얻기
+			    navigator.geolocation.getCurrentPosition (function(pos) {
+			        //$('#latitude').html(pos.coords.latitude);     // 위도
+			        //$('#longitude').html(pos.coords.longitude); // 경도
+			    	var x=pos.coords.latitude;
+			    	var y=pos.coords.longitude;
+			    	$("#xx").val(x);
+			    	$("#yy").val(y);
+			    	alert($("#xx").val()+","+$("#yy").val())
+			    	$("form[name=wearthfrm]").submit();
+			    	//alert(currentLatitude+", "+currentLongitude);
+			    });
+			} else {
+			    alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.")
+			}
 		});
 	});
     </script>
