@@ -5,8 +5,8 @@
     <div id="weatherdiv">
     	<form action="<c:url value='/weather'/>" method="post" name="wearthfrm">
     		<fieldset>
-    			<input value="" type="number" id="xx" name="xx">
-				<input value="" type="number" id="yy" name="yy">
+    			<input value="" type="hidden" id="xx" name="xx">
+				<input value="" type="hidden" id="yy" name="yy">
     		</fieldset>
     	</form>
     </div>
@@ -30,13 +30,15 @@
     <script src="<c:url value='/resources/assets/vendors/js/vendor.bundle.base.js'/>" ></script>
     <style type="text/css">
     	#weatherdiv{
-    		height: 0%;
+    		
     	}
     </style>
     <!-- endinject -->
     <!-- Plugin js for this page -->
     <!-- End plugin js for this page -->
     <!-- inject:js -->
+    <script type="text/javascript" src="<c:url value='/resources/js/jquery-3.4.1.min.js'/>"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="<c:url value='/resources/assets/js/off-canvas.js'/>" ></script>
     <script src="<c:url value='/resources/assets/js/hoverable-collapse.js'/>" ></script>
     <script src="<c:url value='/resources/assets/js/misc.js'/>" ></script>
@@ -65,7 +67,7 @@
 			    	var y=pos.coords.longitude;
 			    	$("#xx").val(x);
 			    	$("#yy").val(y);
-			    	alert($("#xx").val()+","+$("#yy").val())
+			    	//alert($("#xx").val()+","+$("#yy").val())
 			    	$("form[name=wearthfrm]").submit();
 			    	//alert(currentLatitude+", "+currentLongitude);
 			    });

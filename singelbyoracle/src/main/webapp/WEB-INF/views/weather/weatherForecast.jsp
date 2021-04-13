@@ -4,12 +4,11 @@
 
 <div class="content-wrapper">
 	<div class="card">
-		<div id="map" style="width:100%;height:600px;">
-        <div class="search" style="">
+	<div class="search" style="">
             <input id="address" type="text" placeholder="검색할 주소" value="" />
             <input id="submit" type="button" value="주소 검색" />
         </div>
-    </div>
+	<div id="map" style="width:100%;height:600px;"></div>
 	</div>
 </div>
 <input value="${xx }" type="hidden" id="xxx">
@@ -35,13 +34,20 @@
 
 </script>
 <script>
+var contentString='내 위치';
 
 var map = new naver.maps.Map("map", {
 	  center: new naver.maps.LatLng(document.getElementById('xxx').value, document.getElementById('yyy').value),
 	  zoom: 15,
 	  mapTypeControl: true
 	});
-	
+
+var marker = new naver.maps.Marker({
+    position: new naver.maps.LatLng(document.getElementById('xxx').value, document.getElementById('yyy').value),
+    title: contentString,
+    map: map
+});
+
 	var infoWindow = new naver.maps.InfoWindow({
 	  anchorSkew: true
 	});
@@ -59,7 +65,7 @@ var map = new naver.maps.Map("map", {
 	      naver.maps.Service.OrderType.ROAD_ADDR
 	    ].join(',')
 	  }, function(status, response) {
-	    /* if (status === naver.maps.Service.Status.ERROR) {
+	     if (status === naver.maps.Service.Status.ERROR) {
 	      if (!latlng) {
 	        return alert('ReverseGeocode Error, Please check latlng');
 	      }
@@ -70,7 +76,7 @@ var map = new naver.maps.Map("map", {
 	        return alert('ReverseGeocode Error, x:' + latlng.x + ', y:' + latlng.y);
 	      }
 	      return alert('ReverseGeocode Error, Please check latlng');
-	    } */
+	    } 
 	
 	    var address = response.v2.address,
 	        htmlAddresses = [];
@@ -112,6 +118,10 @@ var map = new naver.maps.Map("map", {
 	    var htmlAddresses = [],
 	      item = response.v2.addresses[0],
 	      point = new naver.maps.Point(item.x, item.y);
+
+	    document.getElementById('xxx').value=item.x;
+        document.getElementById('yyy').value=item.y;
+	      
 	
 	    if (item.roadAddress) {
 	      htmlAddresses.push('[도로명 주소] ' + item.roadAddress);
@@ -158,7 +168,17 @@ var map = new naver.maps.Map("map", {
 	    e.preventDefault();
 	
 	    searchAddressToCoordinate($('#address').val());
+	    
+	    var marker = new naver.maps.Marker({
+	        position: new naver.maps.LatLng(document.getElementById('xxx').value, document.getElementById('yyy').value),
+	        title: contentString,
+	        map: map
+	    });
+
+	    
 	  });
+	    searchAddressToCoordinate($('#address').val());
+	    
 	
 	}
 	

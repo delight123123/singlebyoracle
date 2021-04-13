@@ -19,7 +19,6 @@ import com.single.board.model.ReboardVO;
 
 import lombok.extern.java.Log;
 
-@Log
 @Controller
 public class MainController {
 	

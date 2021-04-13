@@ -72,7 +72,7 @@
 								},
 								success:function(res){
 									if(res>0){
-										<img src="<c:url value='/resources/images/file.gif'/>">
+										<img src="<c:url value='/resources/images/file.gif'/>" >
 									}
 								},
 								error:function(xhr,status,error){
