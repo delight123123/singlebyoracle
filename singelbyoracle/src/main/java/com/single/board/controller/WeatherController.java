@@ -13,8 +13,9 @@ public class WeatherController {
 	private final static Logger logger=LoggerFactory.getLogger(WeatherController.class);
 	
 	@RequestMapping("/weather")
-	public Object weather(@RequestParam String xx,@RequestParam String yy,Model model) {
+	public Object weather(@RequestParam double xx,@RequestParam double yy,Model model) {
 		logger.info("일기예보 화면 보이기");
+		
 		
 		model.addAttribute("xx", xx);
 		model.addAttribute("yy", yy);
