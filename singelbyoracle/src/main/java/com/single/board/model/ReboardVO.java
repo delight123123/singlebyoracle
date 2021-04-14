@@ -22,4 +22,7 @@ public class ReboardVO extends SearchVO{
 	private int sortno;
 	private String delflag;
 	private String userid;
+	private int newImgTerm;
+	
+	
 }
