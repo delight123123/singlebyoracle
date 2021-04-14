@@ -197,7 +197,7 @@ public class ReboardController {
 		logger.info("게시글 삭제 결과 res={}",res);
 		
 		String url, msg="";
-		if(res>0) {
+		if(res==-1) {
 			url="/main";
 			msg="해당 게시글이 삭제되었습니다.";
 		}else {
@@ -205,8 +205,10 @@ public class ReboardController {
 			msg="게시글 삭제에 실패하였습니다.";
 		}
 		
+		boolean delRes=false;
+		
 		//게시글 파일 삭제
-		boolean delRes=fileuploadUtil.fileDel(list, session, request);
+		delRes=fileuploadUtil.fileDel(list, session, request);
 		
 		logger.info("게시글 파일 삭제 결과 delRes={}",delRes);
 		
@@ -254,13 +256,15 @@ public class ReboardController {
 		
 		model.addAttribute("vo", vo);
 		
-		return "reboard/replay";
+		return "reboard/reply";
 	}
 	
 	@RequestMapping(value = "/reply", method = RequestMethod.POST)
-	public Object replayPost(@ModelAttribute ReboardVO vo,Model model) {
+	public Object replayPost(@ModelAttribute ReboardVO vo,Model model,HttpSession session) {
 		logger.info("답글 달기 파라미터 vo={}",vo);
-		
+		String userid=(String) session.getAttribute("userid");
+		vo.setUserid(userid);
+		logger.info("id 설정후 vo={}",vo);
 		int res=reboardService.reply(vo);
 		
 		logger.info("답글 달기 결과 res={}",res);

@@ -29,9 +29,9 @@
 		    select rownum as RNUM, A.*
 		    from 
 		    (	
-		    	select * from tbl_reboard
+		    	select reboard_no,reboard_title,reboard_content,reboard_reg,readcount,delflag,userid,step,sortno,(sysdate-reboard_reg)*24 as newImgTerm from tbl_reboard
 			    <include refid="searchWhere"></include>
-				order by reboard_no desc
+				order by groupno desc, sortno
 		    ) A
 		) where RNUM>#{firstRecordIndex} 
 		<![CDATA[
@@ -72,7 +72,7 @@
 		</selectKey>
 		insert into 
 		tbl_reboard(reboard_no, reboard_title, reboard_content, groupno
-		,step,groupno,sortno,userid)
+		,step,sortno,userid)
 		values(#{reboardNo},#{reboardTitle},#{reboardContent},#{groupno}
 		,#{step}+1,#{sortno}+1,#{userid})
 	</insert>

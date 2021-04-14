@@ -74,7 +74,7 @@ $(function() {
 	$("#mainBoard").addClass("active");
 	
 	$("#delA").click(function() {
-		if(alert("삭제 하시겠습니까?")){
+		if(confirm("삭제 하시겠습니까?")){
 			location.href='<c:url value="/delete?no=${param.reboardNo }"/>';
 		}
 	});

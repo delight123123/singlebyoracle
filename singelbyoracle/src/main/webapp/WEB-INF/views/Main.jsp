@@ -58,27 +58,27 @@
 								<img src="<c:url value='/resources/images/re.gif'/>">
 							</c:if>
 							</c:forEach>					
-							<%-- <c:if test="${fn:length(vo.filename)>0 }">   no받아서 ajax처리해서 file있는지 수 세서 넣기
-								<img src="<c:url value='/resources/images/file.gif'/>">
-							</c:if> --%>
+							
 							<script type="text/javascript">
 							var no=${vo.reboardNo};
-							
-							$.ajax({
-								type: "POST", 
-								url:"<c:url value='/fileimg'/>",
-								data: {
-									reboardNo : no
-								},
-								success:function(res){
-									if(res>0){
-										<img src="<c:url value='/resources/images/file.gif'/>" >
+							$(function(){
+								$.ajax({
+									type: "POST", 
+									url:"<c:url value='/fileimg'/>",
+									data: {
+										reboardNo : no
+									},
+									success:function(res){
+										if(res>0){
+											'<img src="<c:url value="/resources/images/file.gif"/>" >'
+										}
+									},
+									error:function(xhr,status,error){
+										alert("Error : "+status+", "+error);
 									}
-								},
-								error:function(xhr,status,error){
-									alert("Error : "+status+", "+error);
-								}
-							})
+								})
+							});
+							
 							</script>
 							
 							<a href="<c:url value='/readCnt?reNo=${vo.reboardNo }'/>" >
@@ -90,6 +90,11 @@
 									${vo.reboardTitle}
 								</c:if>													
 							</a>
+							<!-- 24시간 이내의 글인 경우 new 이미지 보여주기 -->
+							<c:if test="${vo.newImgTerm<24 }">
+								<img src="<c:url value='/resources/images/new.gif'/>" 
+									alt="new 이미지">
+							</c:if>
 							</td>
 						<td>${vo.userid}</td>
 						<td><fmt:formatDate value="${vo.reboardReg }" 
