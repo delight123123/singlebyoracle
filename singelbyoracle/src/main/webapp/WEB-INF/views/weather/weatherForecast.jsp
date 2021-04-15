@@ -4,11 +4,13 @@
 
 <div class="content-wrapper">
 	<div class="card">
-	<div class="search" style="">
-            <input id="address" type="text" placeholder="검색할 주소" value="" />
-            <input id="submit" type="button" value="주소 검색" />
-        </div>
-	<div id="map" style="width:100%;height:600px;"></div>
+		<div class="card-body">
+			<div class="search" style="">
+		            <input id="address" type="text" placeholder="검색할 주소" value="" class="form-control form-control-fw" />
+		            <input id="submit" type="button" value="주소 검색" class="form-control form-control-fw"/>
+		    </div>
+			<div id="map" style="width:100%;height:600px;"></div>
+		</div>
 	</div>
 </div>
 <input value="${xx }" type="hidden" id="xxx">
@@ -28,8 +30,28 @@
 	
 
 	//--------------------------------------------------------------------------------------
-
-	
+	//날씨 ajax 함수 만들자리
+	function weatherAjax(lat,lng) {
+		var toXY="toXY";
+		$.ajax({
+			url:"<c:url value='/weatherAjax'/>",
+			type:"post",
+			data:
+				{
+					code : toXY,
+					mapLat : lat,
+					mapLng : lng
+				}
+			,
+			success:function(res){
+				 alert(res);
+				
+			},
+			error:function(xhr,status,error){
+				alert("Error : "+status+", "+error);
+			}
+		});
+	}
 	
 
 </script>
@@ -178,7 +200,7 @@ var marker = new naver.maps.Marker({
 	    
 	  });
 	    searchAddressToCoordinate($('#address').val());
-	    
+	    //여기 아래에 예보 ajax 함수 넣어주면 될 듯
 	
 	}
 	
