@@ -1,15 +1,44 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../inc/mainTop.jsp" %>
-
+<script type="text/javascript" src="<c:url value='/resources/js/weatherRes.js'/>"></script>
 <div class="content-wrapper">
 	<div class="card">
 		<div class="card-body">
 			<div class="search" style="">
-		            <input id="address" type="text" placeholder="검색할 주소" value="" class="form-control form-control-fw" />
-		            <input id="submit" type="button" value="주소 검색" class="form-control form-control-fw"/>
+		            <input id="address" type="text" placeholder="검색할 주소" value="" />
+		            <input id="submit" type="button" value="주소 검색"/>
 		    </div>
 			<div id="map" style="width:100%;height:600px;"></div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="card-body">
+			<div id="wea">
+				<table class="table text-center" style="width: 100%;">
+					<colgroup>
+						<col style="width:10%;" />
+						<col style="width:10%;" />
+						<col style="width:30%;" />
+						<col style="width:10%;" />
+						<col style="width:10%;" />	
+						<col style="width:30%;" />
+					</colgroup>
+					<thead>
+						<tr>
+							<th scope="col">발표일자</th>
+							<th scope="col">발표시각</th>
+							<th scope="col">카테고리</th>
+							<th scope="col">예보일자</th>
+							<th scope="col">예보시각</th>
+							<th scope="col">예보 값</th>
+						</tr>
+					</thead>
+					<tbody id="weaTableBody">
+					
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>
@@ -25,7 +54,8 @@
 	$(function() {
 		
 		$("#weather").addClass("active");
-    
+    	
+		weatherAjax(document.getElementById('xxx').value, document.getElementById('yyy').value);
 	});
 	
 
@@ -33,6 +63,7 @@
 	//날씨 ajax 함수 만들자리
 	function weatherAjax(lat,lng) {
 		var toXY="toXY";
+		$("#weaTableBody").html("");
 		$.ajax({
 			url:"<c:url value='/weatherAjax'/>",
 			type:"post",
@@ -44,14 +75,18 @@
 				}
 			,
 			success:function(res){
-				 alert(res);
+				 //alert(res);
+				 $.each(res,function(index, arr){
+					
+					 $("#weaTableBody").append(weaRes(arr));
+				 });
 				
 			},
 			error:function(xhr,status,error){
 				alert("Error : "+status+", "+error);
 			}
 		});
-	}
+	};
 	
 
 </script>
@@ -134,16 +169,16 @@ var marker = new naver.maps.Marker({
 	    }
 	
 	    if (response.v2.meta.totalCount === 0) {
-	      return alert('No result.');
+	      return alert('동까지 입력해주세요.');
 	    }
 	
 	    var htmlAddresses = [],
 	      item = response.v2.addresses[0],
 	      point = new naver.maps.Point(item.x, item.y);
 
-	    document.getElementById('xxx').value=item.x;
-        document.getElementById('yyy').value=item.y;
-	      
+	    document.getElementById('xxx').value=item.y;
+        document.getElementById('yyy').value=item.x;
+      
 	
 	    if (item.roadAddress) {
 	      htmlAddresses.push('[도로명 주소] ' + item.roadAddress);
@@ -167,6 +202,10 @@ var marker = new naver.maps.Marker({
 	    map.setCenter(point);
 	    infoWindow.open(map, point);
 	  });
+	  
+	//여기 아래에 예보 ajax 함수 넣어주면 될 듯
+		weatherAjax(document.getElementById('xxx').value, document.getElementById('yyy').value);
+	    
 	}
 	
 	function initGeocoder() {
@@ -176,6 +215,10 @@ var marker = new naver.maps.Marker({
 	
 	  map.addListener('click', function(e) {
 	    searchCoordinateToAddress(e.coord);
+	    document.getElementById('xxx').value=e.coord.y;
+	    document.getElementById('yyy').value=e.coord.x;
+	  //여기 아래에 예보 ajax 함수 넣어주면 될 듯
+		weatherAjax(document.getElementById('xxx').value, document.getElementById('yyy').value);
 	  });
 	
 	  $('#address').on('keydown', function(e) {
@@ -191,17 +234,10 @@ var marker = new naver.maps.Marker({
 	
 	    searchAddressToCoordinate($('#address').val());
 	    
-	    var marker = new naver.maps.Marker({
-	        position: new naver.maps.LatLng(document.getElementById('xxx').value, document.getElementById('yyy').value),
-	        title: contentString,
-	        map: map
-	    });
 
-	    
 	  });
 	    searchAddressToCoordinate($('#address').val());
-	    //여기 아래에 예보 ajax 함수 넣어주면 될 듯
-	
+	    
 	}
 	
 	naver.maps.onJSContentLoaded = initGeocoder;

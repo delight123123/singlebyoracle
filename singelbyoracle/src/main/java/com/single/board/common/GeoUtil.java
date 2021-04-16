@@ -48,7 +48,8 @@ public class GeoUtil {
 		
 		Map<String, String> rs = new HashMap<String, String>();
 		
-		if (code == "toXY") {
+		if (code.equals("toXY")) {
+			logger.info("code={}",code);
 			rs.put("lat", v1 + "");
 			rs.put("lng", v2 + "");
 			double ra = Math.tan(Math.PI * 0.25 + (v1) * DEGRAD * 0.5);
@@ -61,8 +62,12 @@ public class GeoUtil {
 			theta *= sn;
 			double x = Math.floor(ra * Math.sin(theta) + XO + 0.5);
 			double y = Math.floor(ro - ra * Math.cos(theta) + YO + 0.5);
-			rs.put("x", x + "");
-			rs.put("y", y + "");
+			logger.info("x={}, y={}",x,y);
+			int xx=(int) x;
+			int yy=(int) y;
+			logger.info("x={}, y={}",x,y);
+			rs.put("x", Integer.toString(xx));
+			rs.put("y", Integer.toString(yy));
 		} else if(code=="toLanLog"){
 			double theta = 0.0;
 			rs.put("x", v1 + "");

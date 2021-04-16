@@ -4,11 +4,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
 import java.util.Map;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +45,7 @@ public class WeatherController {
 	
 	@ResponseBody
 	@RequestMapping("/weatherAjax")
-	public Object weatherAjax(@RequestParam String code,@RequestParam String mapLat,@RequestParam String mapLng) throws IOException {
+	public Object weatherAjax(@RequestParam String code,@RequestParam String mapLat,@RequestParam String mapLng) throws IOException, ParseException {
 		logger.info("일기예보 받기 파라미터 code={},mapLat={},mapLng={}",code,mapLat,mapLng);
 		String key="%2Fjed2bo0NiEBKIFXlO5%2F2ErSJgaWM4XKGKGIO5bZOo6UEUYU06Nv%2B3sjbAoxZCaev3uHF%2BeIsJAClSGqNCkMAg%3D%3D";
 		Map<String, String> map=geoUtil.dfs_xy_conv(code, mapLat, mapLng);
@@ -54,14 +57,19 @@ public class WeatherController {
 		String currentDay=cutDayHour.get("currentDay");
 		String currentHour=cutDayHour.get("currentHour");
 		
+		int x=Integer.parseInt(map.get("x"));
+		int y=Integer.parseInt(map.get("y"));
+		
+		logger.info("격자 x={},y={}",x,y);
+		
 		String apiurl="http://apis.data.go.kr/1360000/VilageFcstInfoService/getVilageFcst?"
 				+ "serviceKey="+key
-				+ "&pageNo=1&numOfRows=10"
+				+ "&pageNo=1&numOfRows=55"
 				+ "&dataType=json"
 				+ "&base_date="+currentDay
 				+ "&base_time="+currentHour
-				+ "&nx="+map.get("x").toString()
-				+ "&ny="+map.get("y").toString();
+				+ "&nx="+x
+				+ "&ny="+y;
 		
 		URL url = new URL(apiurl);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -83,6 +91,21 @@ public class WeatherController {
         conn.disconnect();
 		logger.info("검색결과 sb={}",sb);
 		
-		return sb;
+		JSONParser jsonparser = new JSONParser();
+        JSONObject jsonobject = (JSONObject)jsonparser.parse(sb.toString());
+        JSONObject json =  (JSONObject) jsonobject.get("response");
+        json=(JSONObject) json.get("body");
+        json=(JSONObject) json.get("items");
+        logger.info("json={}",json.toString());
+        JSONArray array = (JSONArray)json.get("item");
+        for(int i = 0 ; i < array.size(); i++){
+            
+            JSONObject entity = (JSONObject)array.get(i);
+            String category = (String) entity.get("category");
+            System.out.println(category);
+        }
+		
+		
+		return array;
 	}
 }

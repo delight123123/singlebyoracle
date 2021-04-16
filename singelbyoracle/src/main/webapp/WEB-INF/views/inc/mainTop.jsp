@@ -108,15 +108,15 @@
               </a>
             </li>
 
-			<!-- 포트폴리오 다운로드/업로드(이건 나만 가능) -->
-			<li class="nav-item" id="mainBoard">
-              <a class="nav-link z" href="<c:url value=''/>">
-                <span class="menu-title">안정함</span>
+			<!-- 결제 -->
+			<li class="nav-item" id="paymentSystem">
+              <a class="nav-link z" href="<c:url value='/paymemtSystem'/>">
+                <span class="menu-title">결제시스템</span>
                 <i class="mdi mdi-import menu-icon"></i>
               </a>
             </li>
             
-            <!-- 결제 -->
+            <!--  -->
 			<li class="nav-item" id="mainBoard">
               <a class="nav-link z" href="<c:url value=''/>">
                 <span class="menu-title">안정함</span>
