@@ -27,8 +27,15 @@ public class LoginController {
 	private LoginService loginService;
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public Object login() {
+	public Object login(HttpSession session) {
 		logger.info("로그인 화면 띄우기");
+		String userid=(String) session.getAttribute("userid");
+		
+		
+		
+		if(userid!=null) {
+			return "redirect:/main";
+		}
 		
 		return "user/login";
 	}
