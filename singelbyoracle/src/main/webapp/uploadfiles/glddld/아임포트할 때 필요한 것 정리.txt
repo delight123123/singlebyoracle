@@ -1,0 +1,32 @@
+요청 파라미터
+pg: "html5_inicis",
+          pay_method: "card",
+          merchant_uid: "ORD20180131-0000011",
+          name: "노르웨이 회전 의자",
+          amount: 64900,
+          buyer_name: glddld,    (id써야지)
+          buyer_email: "gildong@gmail.com",
+          buyer_tel: "010-4242-4242", 필수
+          
+
+
+응답
+imp_uid 아임포트 거래고유번호   ★db저장★ 더 중요
+merchant_uid 가맹점에서 생성/관리하는 고유 주문번호 ★db저장★
+pay_method 결제수단
+--card(신용카드), trans(실시간계좌이체), vbank(가상계좌), phone(휴대폰소액결제)
+paid_amount 결제금액
+status 결제상태
+--ready(미결제), paid(결제완료), cancelled(결제취소, 부분취소포함), failed(결제실패)
+name 주문명
+pg_tid pg사 거래고유번호
+buyer_name 주문자 이름(id)
+buyer_email 주문자 email
+paid_at 결제승인시각
+apply_num 카드사 승인번호
+
+
+환불 시 꼭 필요한 것
+imp_uid
+서버로 부터 받은 엑세스 토큰
+checksum 환불가능금액

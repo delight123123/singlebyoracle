@@ -108,7 +108,7 @@
               </a>
             </li>
 
-			<!-- 결제 -->
+			<!-- 결제시스템 -->
 			<li class="nav-item" id="paymentSystem">
               <a class="nav-link z" href="<c:url value='/paymemtSystem'/>">
                 <span class="menu-title">결제시스템</span>
@@ -116,17 +116,26 @@
               </a>
             </li>
             
-            <!--  -->
-			<li class="nav-item" id="mainBoard">
+            <!-- 결제 내역 -->
+			<li class="nav-item" id="paymentList">
               <a class="nav-link z" href="<c:url value=''/>">
-                <span class="menu-title">안정함</span>
+                <span class="menu-title">결제 내역</span>
+                <i class="mdi mdi-import menu-icon"></i>
+              </a>
+            </li>
+            
+            <!-- 환불 시스템 -->
+			<li class="nav-item" id="refundSystem">
+              <a class="nav-link z" href="<c:url value=''/>">
+                <span class="menu-title">환불 시스템</span>
                 <i class="mdi mdi-import menu-icon"></i>
               </a>
             </li>
 			
-			<li class="nav-item" id="mainBoard">
+			<!-- 회원관리 -->
+			<li class="nav-item" id="userManagement">
               <a class="nav-link z" href="<c:url value=''/>">
-                <span class="menu-title">안정함</span>
+                <span class="menu-title">회원관리</span>
                 <i class="mdi mdi-import menu-icon"></i>
               </a>
             </li>
