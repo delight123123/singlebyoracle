@@ -118,7 +118,7 @@
             
             <!-- 결제 내역 -->
 			<li class="nav-item" id="paymentList">
-              <a class="nav-link z" href="<c:url value=''/>">
+              <a class="nav-link z" href="<c:url value='/paymentList'/>">
                 <span class="menu-title">결제 내역</span>
                 <i class="mdi mdi-import menu-icon"></i>
               </a>
