@@ -140,7 +140,7 @@ CREATE TABLE tbl_payment (
 	imp_uid     VARCHAR2(100) NOT NULL, -- 임포트아이디
 	price       NUMBER        NOT NULL, -- 금액
 	payment_reg DATE          DEFAULT sysdate, -- 결제일
-	id          VARCHAR2(50)  NOT NULL  -- id
+	userid          VARCHAR2(50)  NOT NULL  -- id
 );
 
 -- 결제테이블
@@ -174,10 +174,10 @@ ALTER TABLE tbl_payment
 	ADD
 		CONSTRAINT FK_tbl_user_TO_tbl_payment -- 유저 -> 결제테이블
 		FOREIGN KEY (
-			id -- id
+			userid -- id
 		)
 		REFERENCES tbl_user ( -- 유저
-			id -- id
+			userid -- id
 		);
 
 -- 환불테이블

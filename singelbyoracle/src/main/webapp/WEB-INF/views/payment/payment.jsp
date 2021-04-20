@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../inc/mainTop.jsp" %>
+
+<input type="hidden" value="${ vo.email1}@${ vo.email2}" id="useremail"/>
+<input type="hidden" value="${ vo.userid}" id="userid"/>
 <div class="content-wrapper">
 	<div class="card">
 		<div class="card-body">
