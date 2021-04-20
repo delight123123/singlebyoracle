@@ -109,7 +109,7 @@
 				</tbody>
 			</table>
 			
-			<div class="divPage text-center">
+	<div class="divPage text-center">
 	 <!-- 이전블럭으로 이동 -->
 	<c:if test="${pagingInfo.firstPage>1 }">	
 		<button type="button" class='btn btn-social-icon btn-outline-youtube btn-sm' onclick="pageFunc(${pagingInfo.firstPage-1})"> &lt;&lt;</button>
