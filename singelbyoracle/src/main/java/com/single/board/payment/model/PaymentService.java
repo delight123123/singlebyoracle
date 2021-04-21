@@ -7,4 +7,5 @@ public interface PaymentService {
 	int paymentInsert(PaymentVO paymentVo);
 	List<Map<String, Object>> paymentSearch(PaymentVO paymentVo);
 	int paymentSearchTotal(PaymentVO paymentVo);
+	PaymentVO paymentSelByimp(String impUid);
 }

@@ -57,7 +57,7 @@
 												<c:if test="${!empty map['REFUND_NO'] }">
 													<c:if test="${map['REFUND_STATE']=='N' }">
 														<input type="button" value="환불 취소" class="refundCancel">
-														<input type="text" value="${map['IMP_UID'] }">
+														<input type="text" value="${map['REFUND_NO'] }">
 														환불 진행중
 													</c:if>
 													<c:if test="${map['REFUND_STATE']=='Y' }">
@@ -133,6 +133,24 @@
 			$("form[name=frmPage]").submit();
 		});
 		
+		$(".refundGo").each(function(idx,item) {
+			$(this).click(function() {
+				var imp=$(this).next().val();
+				//alert(imp);
+				window.open("/refundAsk?imp="+imp,"환불하기",
+				"width=500,height=500,left=0,top=0,location=yes,resizable=yes");
+			});
+		});
+		
+		$(".refundCancel").each(function(idx,item) {
+			$(this).click(function() {
+				var refundNo=$(this).next().val();
+				refundCancel(refundNo);
+				
+			});
+		});
+		
+		
 		
 		$("#date").datepicker({ 
 			showOn: "both", // 버튼과 텍스트 필드 모두 캘린더를 보여준다. 
@@ -160,7 +178,27 @@
 
 	});
 	
-
+function refundCancel(refundNo) {
+		
+		$.ajax({
+			url:"<c:url value='/refundCancel'/>",
+			type:"post",
+			data:{
+				refundNo : refundNo
+			} ,
+			success:function(res){
+				 alert(res);
+				if(res>0){
+					alert("환불 취소 완료");
+					self.reload();
+				}
+				
+			},
+			error:function(xhr,status,error){
+				alert("Error : "+status+", "+error);
+			}
+		});
+	};
 	
 
 </script>

@@ -138,8 +138,10 @@ position: fixed;
 
 <script type="text/javascript">
 function fileup(result) {
+	$("#overray").css("display","block");
+	$("#overray").css("height","100%");
 	var formdata = new FormData($('#upfileform')[0]);
-	alert(result);
+	//alert(result);
 	
 	$.ajax({
 		type: "POST", 
@@ -151,7 +153,7 @@ function fileup(result) {
 		async    : false,
 		success:function(){
 			alert("업로드 완료");
-			location.href="<c:url value='/main'/>"
+			
 		},
 		error:function(xhr,status,error){
 			alert("Error : "+status+", "+error);
@@ -168,9 +170,6 @@ $(function() {
 	$("#mainBoard").addClass("active");
 
 	$("#bfsub").click(function() {
-		$("#overray").css("display","block");
-		$("#overray").css("height","100%");
-
 
 			$.ajax({
 				url:"<c:url value='/boardWrite'/>",
@@ -179,7 +178,10 @@ $(function() {
 				success:function(res){
 					alert("글등록");
 					$("#insertno").val(res);
-					fileup(res);
+					if($("#divdiv2>input[type=file]").val()){
+						fileup(res);
+					}
+					location.href="<c:url value='/main'/>";
 					
 				},
 				error:function(xhr,status,error){

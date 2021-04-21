@@ -16,6 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.single.board.common.PaginationInfo;
@@ -24,6 +26,8 @@ import com.single.board.login.model.LoginService;
 import com.single.board.model.ReboardVO;
 import com.single.board.payment.model.PaymentService;
 import com.single.board.payment.model.PaymentVO;
+import com.single.board.refund.model.RefundService;
+import com.single.board.refund.model.RefundVO;
 import com.single.board.register.model.RegisterVO;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
@@ -41,6 +45,9 @@ public class PaymentController {
 	
 	@Autowired
 	private PaymentService paymentService;
+	
+	@Autowired
+	private RefundService refundService;
 	
 	@RequestMapping("/paymemtSystem")
 	public Object paymentPage(HttpSession session,Model model) {
@@ -135,4 +142,58 @@ public class PaymentController {
 		return res;
 	}
 	
+	@RequestMapping(value = "/refundAsk", method = RequestMethod.GET)
+	public Object refundAsk(@RequestParam String imp, Model model) {
+		logger.info("환불신청 화면 파라미터 imp={}",imp);
+		
+		PaymentVO vo=paymentService.paymentSelByimp(imp);
+		
+		logger.info("결제내역 검색 결과 vo={}",vo);
+		
+		model.addAttribute("vo",vo);
+		
+		return "payment/refundAsk";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/refundAsk", method = RequestMethod.POST)
+	public int refundAskInsert(@RequestParam int paymentNo, @RequestParam String imp
+			,@RequestParam String refundSel,@RequestParam int refundPrice
+			,@RequestParam int payPrice) {
+		logger.info("환불 insert 파라미터 paymentNo={},imp={},refundSel={}",paymentNo,imp,refundSel);
+		logger.info("파라미터 refundPrice={}",refundPrice);
+		
+		if(refundSel=="all") {
+			refundPrice=payPrice;
+		}
+		
+		RefundVO vo=new RefundVO();
+		vo.setPaymentNo(paymentNo);
+		vo.setRefundType(refundSel);
+		vo.setRefundPrice(refundPrice);
+		
+		logger.info("환불 insert vo={}",vo);
+		
+		int res=0;
+		
+		res=refundService.refundInsert(vo);
+		
+		logger.info("insert 결과 res={}",res);
+		
+		return res;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/refundCancel")
+	public int refundCancel(@RequestParam int refundNo) {
+		logger.info("환불 신청 취소 파라미터 refundNo={}",refundNo);
+		
+		int res=0;
+		
+		res=refundService.refundCancel(refundNo);
+		
+		logger.info("취소 결과 res={}",res);
+		
+		return res;
+	}
 }
