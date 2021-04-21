@@ -159,9 +159,9 @@ public class PaymentController {
 	@RequestMapping(value = "/refundAsk", method = RequestMethod.POST)
 	public int refundAskInsert(@RequestParam int paymentNo, @RequestParam String imp
 			,@RequestParam String refundSel,@RequestParam int refundPrice
-			,@RequestParam int payPrice) {
+			,@RequestParam int payPrice,@RequestParam String reason) {
 		logger.info("환불 insert 파라미터 paymentNo={},imp={},refundSel={}",paymentNo,imp,refundSel);
-		logger.info("파라미터 refundPrice={}",refundPrice);
+		logger.info("파라미터 refundPrice={},reason={}",refundPrice,reason);
 		
 		if(refundSel=="all") {
 			refundPrice=payPrice;
@@ -171,7 +171,7 @@ public class PaymentController {
 		vo.setPaymentNo(paymentNo);
 		vo.setRefundType(refundSel);
 		vo.setRefundPrice(refundPrice);
-		
+		vo.setRefundReason(reason);
 		logger.info("환불 insert vo={}",vo);
 		
 		int res=0;

@@ -19,4 +19,5 @@ public class RefundVO extends SearchVO{
 	private String refundState;
 	private Timestamp refundDate;
 	private int paymentNo;
+	private String refundReason;
 }
