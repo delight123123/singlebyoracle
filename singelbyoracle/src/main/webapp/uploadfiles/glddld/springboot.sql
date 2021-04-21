@@ -34,10 +34,7 @@ CREATE TABLE tbl_user (
 	email1    VARCHAR2(900)      NULL,     -- 이메일1
 	email2    VARCHAR2(900)      NULL,     -- 이메일2
 	salt      VARCHAR2(100 char) NOT NULL, -- 암호화
-	writeauth VARCHAR2(3)        DEFAULT 'N', -- 쓰기권한
-	readauth  VARCHAR2(3)        DEFAULT 'Y', -- 읽기권한
-	adminauth VARCHAR2(3)        DEFAULT 'N', -- 관리자권한
-	path      VARCHAR2(2000)     NULL      -- 공유 폴더
+	adminauth VARCHAR2(3)        DEFAULT 'N' -- 관리자권한
 );
 
 -- 유저
@@ -155,6 +152,7 @@ ALTER TABLE tbl_payment
 CREATE TABLE tbl_refund (
 	refund_no      NUMBER      NOT NULL, -- 환불번호
 	refund_type    VARCHAR2(2) NOT NULL, -- 환불종류
+	refund_price   NUMBER      NOT NULL, -- 환불금액
 	reporting_date DATE        DEFAULT sysdate, -- 환불신청일
 	refund_state   VARCHAR2(2) DEFAULT 'N', -- 환불상태
 	refund_date    DATE        NOT NULL, -- 환불완료일

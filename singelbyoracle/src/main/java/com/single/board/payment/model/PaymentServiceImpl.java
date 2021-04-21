@@ -26,6 +26,11 @@ public class PaymentServiceImpl implements PaymentService{
 	public int paymentSearchTotal(PaymentVO paymentVo) {
 		return paymentDao.paymentSearchTotal(paymentVo);
 	}
+
+	@Override
+	public PaymentVO paymentSelByimp(String impUid) {
+		return paymentDao.paymentSelByimp(impUid);
+	}
 	
 	
 	

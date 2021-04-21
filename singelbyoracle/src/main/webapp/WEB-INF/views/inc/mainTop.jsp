@@ -125,21 +125,23 @@
               </a>
             </li>
             
-            <!-- 환불 시스템 -->
-			<li class="nav-item" id="refundSystem">
-              <a class="nav-link z" href="<c:url value=''/>">
-                <span class="menu-title">환불 시스템</span>
-                <i class="mdi mdi-import menu-icon"></i>
-              </a>
-            </li>
-			
-			<!-- 회원관리 -->
-			<li class="nav-item" id="userManagement">
-              <a class="nav-link z" href="<c:url value=''/>">
-                <span class="menu-title">회원관리</span>
-                <i class="mdi mdi-import menu-icon"></i>
-              </a>
-            </li>
+			<c:if test="${sessionScope.auth=='Y'}">
+	            <!-- 환불 시스템 -->
+				<li class="nav-item" id="refundSystem">
+	              <a class="nav-link z" href="<c:url value='/refundList'/>">
+	                <span class="menu-title">환불 시스템</span>
+	                <i class="mdi mdi-import menu-icon"></i>
+	              </a>
+	            </li>
+	            
+				<!-- 회원관리 -->
+				<li class="nav-item" id="userManagement">
+	              <a class="nav-link z" href="<c:url value=''/>">
+	                <span class="menu-title">회원관리</span>
+	                <i class="mdi mdi-import menu-icon"></i>
+	              </a>
+	            </li>
+			</c:if>
 			
           </ul>
         </nav>
