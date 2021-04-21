@@ -61,7 +61,15 @@
 		});
 		
 		$("#ask").clcik(function() {
-			refundInsert();
+			if($("#reason").val()==0){
+				alert("사유를 작성하여 주시기 바랍니다.");
+			}else if($("#reason").val()>0 && $("#reason").val() <5){
+				alert("사유를 6글자 이상 적어주시기 바랍니다.");
+			}
+			else{
+				refundInsert();
+			}
+			
 		});
 	});
 	
@@ -98,6 +106,10 @@
 <legend>환불 신청</legend>
 	<div>
 		<ul>
+			<li>
+				<label for="reason">사유</label>
+				<input type="text" name="reason" id="reason" placeholder="사유를 작성해주세요" class="form-control form-control-sm"/>
+			</li>
 			<li>
 				<label><input type="radio" name="refundSel" id="refundSel" value="all">전액환불</label>
 			</li>
