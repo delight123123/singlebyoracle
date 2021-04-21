@@ -13,5 +13,5 @@ public class RegisterVO {
 	private String email1;
 	private String email2;
 	private String salt;
-	private String path;
+	private String adminauth;
 }

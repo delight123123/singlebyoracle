@@ -9,6 +9,6 @@
 	
 	<insert id="userregister" parameterType="registerVo">
 		insert into tbl_user
-		values(#{userid},#{userpw},#{email1},#{email2},#{salt},default,default,default,#{path})
+		values(#{userid},#{userpw},#{email1},#{email2},#{salt},default)
 	</insert>
 </mapper>

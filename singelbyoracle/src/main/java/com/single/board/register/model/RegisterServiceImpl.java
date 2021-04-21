@@ -19,7 +19,7 @@ public class RegisterServiceImpl implements RegisterService{
 	@Override
 	public int userRegister(RegisterVO registerVo) {
 		
-		registerVo.setPath("");
+		
 		String salt=SHA256Util.generateSalt();
 		registerVo.setSalt(salt);
 		String password=SHA256Util.getEncrypt(registerVo.getUserpw(), salt);

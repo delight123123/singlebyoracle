@@ -66,6 +66,11 @@
 		<include refid="searchWhere2"></include>
 	</select>
 
+	<select id="paymentSelByimp" parameterType="string" resultType="paymentVo">
+		select * from tbl_payment
+		where imp_uid=#{impUid}
+	</select>
+	
 	
 </mapper>
 

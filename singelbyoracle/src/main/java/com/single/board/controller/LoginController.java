@@ -66,6 +66,7 @@ public class LoginController {
 			
 			HttpSession session=request.getSession();
 			session.setAttribute("userid", registerVo.getUserid());
+			session.setAttribute("auth", registerVo.getAdminauth());
 			
 			Cookie ck=new Cookie("chk_userid", userid);
 			ck.setPath("/");
