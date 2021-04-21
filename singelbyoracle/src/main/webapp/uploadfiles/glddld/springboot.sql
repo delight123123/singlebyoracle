@@ -151,6 +151,7 @@ ALTER TABLE tbl_payment
 -- 환불테이블
 CREATE TABLE tbl_refund (
 	refund_no      NUMBER      NOT NULL, -- 환불번호
+	refund_reason  VARCHAR2(100) NOT NULL, -- 환불사유
 	refund_type    VARCHAR2(2) NOT NULL, -- 환불종류
 	refund_price   NUMBER      NOT NULL, -- 환불금액
 	reporting_date DATE        DEFAULT sysdate, -- 환불신청일
