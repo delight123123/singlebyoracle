@@ -152,11 +152,11 @@ ALTER TABLE tbl_payment
 CREATE TABLE tbl_refund (
 	refund_no      NUMBER      NOT NULL, -- 환불번호
 	refund_reason  VARCHAR2(100) NOT NULL, -- 환불사유
-	refund_type    VARCHAR2(2) NOT NULL, -- 환불종류
+	refund_type    VARCHAR2(10) NOT NULL, -- 환불종류
 	refund_price   NUMBER      NOT NULL, -- 환불금액
 	reporting_date DATE        DEFAULT sysdate, -- 환불신청일
 	refund_state   VARCHAR2(2) DEFAULT 'N', -- 환불상태
-	refund_date    DATE        NOT NULL, -- 환불완료일
+	refund_date    DATE        , -- 환불완료일
 	payment_no     NUMBER      NOT NULL  -- 결제번호
 );
 

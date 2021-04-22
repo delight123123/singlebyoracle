@@ -8,4 +8,5 @@ public interface PaymentDAO {
 	List<Map<String, Object>> paymentSearch(PaymentVO paymentVo);
 	int paymentSearchTotal(PaymentVO paymentVo);
 	PaymentVO paymentSelByimp(String impUid);
+	PaymentVO paymentSelByNo(int paymentNo);
 }

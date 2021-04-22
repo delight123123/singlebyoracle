@@ -34,6 +34,11 @@ public class PaymentDAOMybatis implements PaymentDAO{
 	public PaymentVO paymentSelByimp(String impUid) {
 		return sqlSession.selectOne(namespace+"paymentSelByimp", impUid);
 	}
+
+	@Override
+	public PaymentVO paymentSelByNo(int paymentNo) {
+		return sqlSession.selectOne(namespace+"paymentSelByNo", paymentNo);
+	}
 	
 	
 	

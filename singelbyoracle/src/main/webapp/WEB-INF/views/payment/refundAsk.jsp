@@ -60,7 +60,7 @@
 			}
 		});
 		
-		$("#ask").clcik(function() {
+		$("#ask").click(function() {
 			if($("#reason").val()==0){
 				alert("사유를 작성하여 주시기 바랍니다.");
 			}else if($("#reason").val()>0 && $("#reason").val() <5){
@@ -77,11 +77,11 @@
 	function refundInsert() {
 		
 		$.ajax({
-			url:"<c:url value='/refundAsk'/>",
+			url:"<c:url value='/refundAskdo'/>",
 			type:"post",
 			data: $("form[name=frm]").serialize(),
 			success:function(res){
-				 alert(res);
+				 //alert(res);
 				if(res>0){
 					alert("환불신청 완료");
 					opener.location.reload();
@@ -99,9 +99,10 @@
 <body>
 
 <div class="content-wrapper">
-<form name="frm" >
+<form name="frm" method="post">
 <input type="hidden" value="${vo.paymentNo}" id="paymentNo" name="paymentNo">
 <input type="hidden" value="${vo.price}" id="payPrice" name="payPrice">
+<input type="hidden" value="${vo.impUid}" id="imp" name="imp">
 <fieldset>
 <legend>환불 신청</legend>
 	<div>
@@ -115,7 +116,7 @@
 			</li>
 			<li>
 				<label><input type="radio" name="refundSel" id="refundSel" value="part">부분환불</label>
-				<input type="number" max="${vo.price }" min="0" placeholder="환불금액" class="form-control form-control-sm" id="refundPrice" name="refundPrice">
+				<input type="number" value="${vo.price }" max="${vo.price }" min="0" placeholder="환불금액" class="form-control form-control-sm" id="refundPrice" name="refundPrice">
 			</li>
 		</ul>	
 	</div>

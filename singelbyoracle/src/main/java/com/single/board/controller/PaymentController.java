@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.single.board.common.PaginationInfo;
 import com.single.board.common.Utility;
 import com.single.board.login.model.LoginService;
-import com.single.board.model.ReboardVO;
 import com.single.board.payment.model.PaymentService;
 import com.single.board.payment.model.PaymentVO;
 import com.single.board.refund.model.RefundService;
@@ -156,7 +155,7 @@ public class PaymentController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/refundAsk", method = RequestMethod.POST)
+	@RequestMapping("/refundAskdo")
 	public int refundAskInsert(@RequestParam int paymentNo, @RequestParam String imp
 			,@RequestParam String refundSel,@RequestParam int refundPrice
 			,@RequestParam int payPrice,@RequestParam String reason) {

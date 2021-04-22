@@ -31,4 +31,14 @@ public class RefundServiceImpl implements RefundService{
 	public int refundCancel(int refundNo) {
 		return refundDao.refundCancel(refundNo);
 	}
+
+	@Override
+	public RefundVO refundSelByno(int refundNo) {
+		return refundDao.refundSelByno(refundNo);
+	}
+
+	@Override
+	public int refundUpdate(int refundNo) {
+		return refundDao.refundUpdate(refundNo);
+	}
 }

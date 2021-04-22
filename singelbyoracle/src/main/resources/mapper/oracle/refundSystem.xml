@@ -14,7 +14,7 @@
 	
 	<sql id="searchWhere">
 		<if test="searchKeyword!=null and searchKeyword!=''">
-			where ${searchCondition} like '%' || #{searchKeyword} || '%'
+			where ${searchCondition} between  #{searchKeyword} and  to_DATE(#{searchKeyword})+1
 		</if>
 	</sql>
 	
@@ -56,6 +56,16 @@
 		delete from tbl_refund
 		where refund_no=#{refundNo}
 	</delete>
+	
+	<select id="refundSelByno" parameterType="int" resultType="refundVo">
+		select * from tbl_refund where refund_no=#{refundNo}
+	</select>
+	
+	<update id="refundUpdate" parameterType="int">
+		update tbl_refund
+		set refund_state='Y' , refund_date=sysdate
+		where refund_no=#(refundNo)
+	</update>
 	
 </mapper>
 

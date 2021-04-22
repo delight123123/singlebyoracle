@@ -71,4 +71,11 @@ public class MainController {
 		
 		return res;
 	}
+	
+	@RequestMapping("/realTimeChat")
+	public Object realTimeChat() {
+		logger.info("실시간 채팅");
+		
+		return "chatting/realTimeChat";
+	}
 }

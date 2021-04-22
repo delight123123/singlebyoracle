@@ -136,12 +136,20 @@
 	            
 				<!-- 회원관리 -->
 				<li class="nav-item" id="userManagement">
-	              <a class="nav-link z" href="<c:url value=''/>">
+	              <a class="nav-link z" href="<c:url value='/userManagement'/>">
 	                <span class="menu-title">회원관리</span>
 	                <i class="mdi mdi-import menu-icon"></i>
 	              </a>
 	            </li>
 			</c:if>
+			
+			<!-- 실시간 채팅 -->
+				<li class="nav-item" id="realTimeChat">
+	              <a class="nav-link z" href="<c:url value='/realTimeChat'/>">
+	                <span class="menu-title">실시간 채팅</span>
+	                <i class="mdi mdi-import menu-icon"></i>
+	              </a>
+	            </li>
 			
           </ul>
         </nav>
