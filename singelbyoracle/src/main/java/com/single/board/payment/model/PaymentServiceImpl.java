@@ -31,6 +31,11 @@ public class PaymentServiceImpl implements PaymentService{
 	public PaymentVO paymentSelByimp(String impUid) {
 		return paymentDao.paymentSelByimp(impUid);
 	}
+
+	@Override
+	public PaymentVO paymentSelByNo(int paymentNo) {
+		return paymentDao.paymentSelByNo(paymentNo);
+	}
 	
 	
 	

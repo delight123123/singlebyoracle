@@ -22,32 +22,37 @@
 				<table class="table text-center" style="width: 100%;">
 					<colgroup>
 						<col style="width:10%;" />
+						<col style="width:35%;" />
+						<col style="width:5%;" />
 						<col style="width:10%;" />
-						<col style="width:20%;" />
-						<col style="width:20%;" />
-						<col style="width:20%;" />
-						<col style="width:20%;" />
+						<col style="width:10%;" />
+						<col style="width:10%;" />
+						<col style="width:10%;" />
+						<col style="width:10%;" />
 					</colgroup>
 					<thead>
 						<tr>
 							<th scope="col">유저명</th>
+							<th scope="col">사유</th>
 							<th scope="col">환불종류</th>
 							<th scope="col">환불금액</th>
 							<th scope="col">신청일</th>
 							<th scope="col">상태</th>
+							<th scope="col">처리일</th>
 							<th scope="col">버튼</th>
 						</tr>
 					</thead>
 					<tbody id="payTableBody" style="width: 100%;">
 						<c:if test="${empty list }">
 							<tr>
-								<td colspan="6">환불 내역이 존재하지 않습니다.</td>
+								<td colspan="8">환불 내역이 존재하지 않습니다.</td>
 							</tr>
 						</c:if>
 						<c:if test="${!empty list }">
 							<c:forEach var="map" items="${list }">
 								<tr>
 									<td>${map['USERID'] }</td>
+									<td>${map['REFUND_REASON'] }</td>
 									<td>
 										<c:if test="${map['REFUND_TYPE']=='all' }">전액</c:if>
 										<c:if test="${map['REFUND_TYPE']=='part' }">부분</c:if>
@@ -55,8 +60,17 @@
 									<td>
 										<fmt:formatNumber value="${map['REFUND_PRICE'] }" pattern="#,###" /> 원
 									</td>
-									<td>${map['PRPORTING_DATE'] }</td>
+									<td><fmt:formatDate value="${map['REPORTING_DATE'] }" pattern="yyyy-MM-dd"/> </td>
 									<td>${map['REFUND_STATE'] }</td>
+									
+									<td>
+									<c:if test="${!empty map['REFUND_DATE'] }">
+										<fmt:formatDate value="${map['REFUND_DATE'] }" pattern="yyyy-MM-dd"/>
+									</c:if>
+									<c:if test="${empty map['REFUND_DATE'] }">
+									-
+									</c:if>
+									 </td>
 									<td>
 									<c:if test="${map['REFUND_STATE']=='N' }">
 										<input type="button" value="환불" class="refundGo">
@@ -106,7 +120,7 @@
 
 <%@include file="../inc/mainBottom.jsp" %>
 <style type="text/css">
-#paySearch{
+#refundSearch{
 	width: 10%;
 	display: inline-block;
 	margin-left: 1%;
@@ -125,7 +139,7 @@
 	
 	$(function() {
 		
-		$("#paymentList").addClass("active");
+		$("#refundSystem").addClass("active");
     	
 		$("#refundSearch").click(function() {
 			$("#aa2").val($("#date").val());
@@ -135,7 +149,7 @@
 		$(".refundGo").each(function(idx,item) {
 			$(this).click(function() {
 				var refundNo=$(this).next().val();
-				
+				refundGo(refundNo);
 			});
 		})
 		
@@ -167,6 +181,26 @@
 	});
 	
 
-	
+function refundGo(refundNo) {
+		
+		$.ajax({
+			url:"<c:url value='/refundGo'/>",
+			type:"post",
+			data: {
+				refundNo : refundNo
+			},
+			success:function(res){
+				alert(res);
+				if(res>0){
+					alert("환불 처리 완료");
+					location.reload();
+				}
+				
+			},
+			error:function(xhr,status,error){
+				alert("Error : "+status+", "+error);
+			}
+		});
+	};
 
 </script>

@@ -20,7 +20,7 @@
 	
 	<sql id="searchWhere2">
 		<if test="searchKeyword!=null and searchKeyword!=''">
-			and ${searchCondition} like '%' || #{searchKeyword} || '%'
+			and ${searchCondition} between  #{searchKeyword} and  to_DATE(#{searchKeyword})+1
 		</if>
 	</sql>
 
@@ -69,6 +69,11 @@
 	<select id="paymentSelByimp" parameterType="string" resultType="paymentVo">
 		select * from tbl_payment
 		where imp_uid=#{impUid}
+	</select>
+	
+	<select id="paymentSelByNo" parameterType="int" resultType="paymentVo">
+		select * from tbl_payment
+		where payment_no=#{paymentNo}
 	</select>
 	
 	

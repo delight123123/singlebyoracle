@@ -8,4 +8,6 @@ public interface RefundService {
 	List<Map<String, Object>> refundSearch(RefundVO refundVo);
 	int refundSearchTotal(RefundVO refundVo);
 	int refundCancel(int refundNo);
+	RefundVO refundSelByno(int refundNo);
+	int refundUpdate(int refundNo);
 }

@@ -14,7 +14,8 @@
 <div class="content-wrapper">
 	<div class="card">
 		<div class="card-body">
-			<input type="text" id="date" class="form-control form-control-sm"  disabled="disabled" placeholder="옆 버튼을 클릭하여 검색할 날짜를 선택해주세요."/>
+			<input type="text" id="date" class="form-control form-control-sm"
+			value="${param.searchKeyword}"  disabled="disabled" placeholder="옆 버튼을 클릭하여 검색할 날짜를 선택해주세요."/>
 			<input type="button" value="검색" class="form-control form-control-sm" id="paySearch"/>
 		</div>
 		<div class="card-body">
@@ -45,19 +46,19 @@
 								<tr>
 									<td>${map['ORDERNAME'] }</td>
 									<td><fmt:formatNumber pattern="#,###" value="${map['PRICE'] }" /> 원</td>
-									<td>${map['PAYMENT_REG'] }</td>
+									<td><fmt:formatDate value="${map['PAYMENT_REG'] }" pattern="yyyy-MM-dd"/></td>
 									<td>
 										<c:choose>
 											<c:when test="${map['ABLEDATE']>(24*14) }" >구매 확정</c:when>
 											<c:otherwise>
 												<c:if test="${empty map['REFUND_NO'] }">
 													<input type="button" value="환불하기" class="refundGo">
-													<input type="text" value="${map['IMP_UID'] }">
+													<input type="hidden" value="${map['IMP_UID'] }">
 												</c:if>
 												<c:if test="${!empty map['REFUND_NO'] }">
 													<c:if test="${map['REFUND_STATE']=='N' }">
 														<input type="button" value="환불 취소" class="refundCancel">
-														<input type="text" value="${map['REFUND_NO'] }">
+														<input type="hidden" value="${map['REFUND_NO'] }">
 														환불 진행중
 													</c:if>
 													<c:if test="${map['REFUND_STATE']=='Y' }">
@@ -187,10 +188,10 @@ function refundCancel(refundNo) {
 				refundNo : refundNo
 			} ,
 			success:function(res){
-				 alert(res);
+				//alert(res);
 				if(res>0){
 					alert("환불 취소 완료");
-					self.reload();
+					location.reload();
 				}
 				
 			},

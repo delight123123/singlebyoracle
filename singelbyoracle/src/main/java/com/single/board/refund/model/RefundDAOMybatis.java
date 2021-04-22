@@ -34,6 +34,16 @@ public class RefundDAOMybatis implements RefundDAO{
 	public int refundCancel(int refundNo) {
 		return sqlSession.delete(namespace+"refundCancel", refundNo);
 	}
+
+	@Override
+	public RefundVO refundSelByno(int refundNo) {
+		return sqlSession.selectOne(namespace+"refundSelByno", refundNo);
+	}
+
+	@Override
+	public int refundUpdate(int refundNo) {
+		return sqlSession.update(namespace+"refundUpdate", refundNo);
+	}
 	
 	
 	
