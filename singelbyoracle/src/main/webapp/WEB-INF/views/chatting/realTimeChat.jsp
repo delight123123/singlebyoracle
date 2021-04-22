@@ -27,6 +27,7 @@
 #chating{
 	width: 100%;
 	height: 100%;
+	overflow: auto;
 }
 #chatting{
 	width: 90%;
@@ -58,6 +59,7 @@ var ws;
 	}
 		
 	function wsEvt() {
+		alert(we.readyState);
 		ws.onopen = function(data){
 			//소켓이 열리면 초기화 세팅하기
 		}
