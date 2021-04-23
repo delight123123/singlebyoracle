@@ -34,7 +34,8 @@ CREATE TABLE tbl_user (
 	email1    VARCHAR2(900)      NULL,     -- 이메일1
 	email2    VARCHAR2(900)      NULL,     -- 이메일2
 	salt      VARCHAR2(100 char) NOT NULL, -- 암호화
-	adminauth VARCHAR2(3)        DEFAULT 'N' -- 관리자권한
+	adminauth VARCHAR2(3)        DEFAULT 'N', -- 관리자권한
+	out_date   DATE
 );
 
 -- 유저

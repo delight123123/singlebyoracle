@@ -16,6 +16,12 @@
 		select userpw from tbl_user where userid=#{userid}
 	</select>
 	
+	<update id="userPwCg" parameterType="registerVo">
+		update tbl_user
+		set userpw=#{userpw}
+		where userid=#{userid}
+	</update>
+	
 </mapper>
 
 

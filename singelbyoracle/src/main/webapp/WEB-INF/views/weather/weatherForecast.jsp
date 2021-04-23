@@ -54,7 +54,7 @@
 	$(function() {
 		
 		$("#weather").addClass("active");
-    	
+		dufqkesp();
 		weatherAjax(document.getElementById('xxx').value, document.getElementById('yyy').value);
 	});
 	
@@ -242,5 +242,25 @@ var marker = new naver.maps.Marker({
 	
 	naver.maps.onJSContentLoaded = initGeocoder;
 	naver.maps.Event.once(map, 'init_stylemap', initGeocoder);
+	
+	
+	function dufqkesp() {
+    	if (navigator.geolocation) {
+		    //위치 정보를 얻기
+		    navigator.geolocation.getCurrentPosition (function(pos) {
+		        //$('#latitude').html(pos.coords.latitude);     // 위도
+		        //$('#longitude').html(pos.coords.longitude); // 경도
+		    	var x=pos.coords.latitude;
+		    	var y=pos.coords.longitude;
+		    	$("#xxx").val(x);
+		    	$("#yyy").val(y);
+		    	//alert($("#xx").val()+","+$("#yy").val())
+		    	//$("form[name=wearthfrm]").submit();
+		    	//alert(currentLatitude+", "+currentLongitude);
+		    });
+		} else {
+		    alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.")
+		}
+	}
 </script>
 
