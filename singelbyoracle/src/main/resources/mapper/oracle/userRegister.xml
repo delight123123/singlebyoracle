@@ -8,7 +8,79 @@
 	</select>
 	
 	<insert id="userregister" parameterType="registerVo">
-		insert into tbl_user
+		insert into tbl_user(userid,userpw,email1,email2,salt,adminauth)
 		values(#{userid},#{userpw},#{email1},#{email2},#{salt},default)
 	</insert>
+	
+		<sql id="searchWhere">
+		<if test="searchKeyword!=null and searchKeyword!=''">
+			and ${searchCondition} like '%' || #{searchKeyword} || '%'
+		</if>
+	</sql>
+	
+	<select id="noneWithdrawal" parameterType="registerVo" resultType="registerVo">
+		select *
+		from
+		(
+		    select rownum as RNUM, A.*
+		    from 
+		    (	
+		    	select * from tbl_user where out_date is null and userid!=#{userid}
+			    <include refid="searchWhere"></include>
+		    ) A
+		) where RNUM>#{firstRecordIndex} 
+		<![CDATA[
+		and RNUM<=#{firstRecordIndex}+#{recordCountPerPage}
+		]]>
+	</select>
+	
+	
+	<select id="noneWithdrawalTotal" parameterType="registerVo" resultType="int">
+		select count(*) from tbl_user where out_date is null and userid!=#{userid}
+	</select>
+	
+	<sql id="searchWhere2">
+		<if test="searchKeyword2!=null and searchKeyword2!=''">
+			and ${searchCondition2} like '%' || #{searchKeyword2} || '%'
+		</if>
+	</sql>
+	
+	<select id="withdrawal" parameterType="registerVo" resultType="registerVo">
+		select *
+		from
+		(
+		    select rownum as RNUM, A.*
+		    from 
+		    (	
+		    	select *
+				from tbl_user  
+				where out_date is not null and userid!=#{userid}
+			    <include refid="searchWhere2"></include>
+		    ) A
+		) where RNUM>#{firstRecordIndex2} 
+		<![CDATA[
+		and RNUM<=#{firstRecordIndex2}+#{recordCountPerPage}
+		]]>
+	</select>
+	
+	<select id="withdrawalTotal" parameterType="registerVo" resultType="int">
+		select count(*)
+		from tbl_user  
+		where out_date is not null and userid!=#{userid}
+	</select>
+	
+	<update id="forcedExit" parameterType="string">
+		update tbl_user set out_date=sysdate
+		where userid=#{userid}
+	</update>
+	
+	<update id="cancle" parameterType="string">
+		update tbl_user set out_date=''
+		where userid=#{userid}
+	</update>
+	
+	<select id="userAll" resultType="registerVo">
+		select * from tbl_user
+	</select>
+	
 </mapper>

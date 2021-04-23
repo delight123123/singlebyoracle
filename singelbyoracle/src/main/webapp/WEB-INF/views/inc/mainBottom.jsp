@@ -51,13 +51,15 @@
 			}
 		});
 		
-		$("#pwdcg").click(function() {
-			window.open("","pwdCg",
+    	$("#pwdcg").click(function() {
+			window.open("/pwdCg","비밀번호 변경",
 			"width=500,height=500,left=0,top=0,location=yes,resizable=yes");
 		});
 		
 		
+		
 		$("#weathergo").click(function() {
+			
 			if (navigator.geolocation) {
 			    //위치 정보를 얻기
 			    navigator.geolocation.getCurrentPosition (function(pos) {
@@ -76,6 +78,28 @@
 			}
 		});
 	});
+    
+    function dufqkesp() {
+    	if (navigator.geolocation) {
+		    //위치 정보를 얻기
+		    navigator.geolocation.getCurrentPosition (function(pos) {
+		        //$('#latitude').html(pos.coords.latitude);     // 위도
+		        //$('#longitude').html(pos.coords.longitude); // 경도
+		    	var x=pos.coords.latitude;
+		    	var y=pos.coords.longitude;
+		    	$("#xx").val(x);
+		    	$("#yy").val(y);
+		    	//alert($("#xx").val()+","+$("#yy").val())
+		    	$("form[name=wearthfrm]").submit();
+		    	//alert(currentLatitude+", "+currentLongitude);
+		    });
+		} else {
+		    alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.")
+		}
+	}
+
+	
+    
     </script>
     <!-- endinject -->
     <!-- Custom js for this page -->

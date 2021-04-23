@@ -91,7 +91,7 @@ public class LoginController {
 		return "common/message";
 	}
 	
-	@RequestMapping("logout")
+	@RequestMapping("/logout")
 	public Object logout(HttpSession session) {
 		String userid= (String) session.getAttribute("userid");
 		
@@ -100,5 +100,37 @@ public class LoginController {
 		session.removeAttribute("userid");
 		
 		return "redirect:/login";
+	}
+	
+	@RequestMapping("/pwdCg")
+	public Object pwdCg() {
+		logger.info("비밀번호 변경 화면");
+		
+		return "user/pwdCg";
+	}
+	
+	@RequestMapping("/userPwdCg")
+	public int userPwdCg(@RequestParam String currPwd, @RequestParam String cgPwd
+			, HttpSession session) {
+		logger.info("비밀번호 변경 파라미터 currPwd={}, cgPwd={}",currPwd,cgPwd);
+		
+		String userid=(String) session.getAttribute("userid");
+		
+		int res=0;
+		
+		int login=loginService.userLogin(userid, currPwd);
+		if(login==LoginService.NONE_USERID) {
+			RegisterVO vo=new RegisterVO();
+			vo.setUserid(userid);
+			vo.setUserpw(cgPwd);
+			res=loginService.userPwCg(vo);
+			logger.info("비밀번호 변경 결과 res={}",res);
+		}else if(login==LoginService.DISAGREE_PWD) {
+			
+		}
+		
+		
+		
+		return res;
 	}
 }

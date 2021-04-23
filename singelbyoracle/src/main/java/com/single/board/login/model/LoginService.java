@@ -9,4 +9,5 @@ public interface LoginService {
 	
 	int userLogin(String userid,String userpw);
 	RegisterVO userInfoByuserid(String userid);
+	int userPwCg(RegisterVO registerVo);
 }

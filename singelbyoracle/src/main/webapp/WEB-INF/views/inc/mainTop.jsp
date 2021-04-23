@@ -103,7 +103,7 @@
 
 			<!-- 날씨 -->
 			<li class="nav-item" id="weather">
-              <a class="nav-link z" href="#" id="weathergo">
+              <a class="nav-link z" id="weathergo" onclick="dufqkesp();"  href="<c:url value='/weather'/>">
                 <span class="menu-title">날씨</span>
                 <i class="mdi mdi-brightness-5 menu-icon"></i>
               </a>

@@ -17,11 +17,11 @@
 
 <%@include file="../inc/mainBottom.jsp" %>
 <style type="text/css">
-.card{
+.card, .card-body{
 	height: 100%;
 }
 #alldiv{
-	height: 100%;
+	height: 95%;
 	width: 100%;
 }
 #chating{
@@ -37,6 +37,9 @@
 	width: 10%;
 	float: left;
 }
+.content-wrapper{
+	height: 500px;
+}
 </style>
 <script type="text/javascript">
 
@@ -45,6 +48,10 @@ var realTime = new Date();
 //var realTime=da.format('yyyy-MM-dd(KS) HH:mm:ss');
 var ws;
 	$(function() {
+		var mainpanelHeight=$(".main-panel").height();
+		//alert(mainpanelHeight);
+		
+		$(".content-wrapper").css("height",mainpanelHeight*0.9132+"px");
 		
 		$("#realTimeChat").addClass("active");
     	
@@ -59,7 +66,8 @@ var ws;
 	}
 		
 	function wsEvt() {
-		alert(we.readyState);
+		
+		
 		ws.onopen = function(data){
 			//소켓이 열리면 초기화 세팅하기
 		}
@@ -68,6 +76,7 @@ var ws;
 			var msg = data.data;
 			if(msg != null && msg.trim() != ''){
 				$("#chating").append("<p>" + msg + "</p>");
+				$("#chating").scrollTop($("#chating")[0].scrollHeight);
 			}
 		}
 

@@ -27,4 +27,9 @@ public class LoginDAOMybatis implements LoginDAO{
 	public String pwByuserid(String userid) {
 		return sqlSession.selectOne(namespace+"pwByuserid", userid);
 	}
+
+	@Override
+	public int userPwCg(RegisterVO registerVo) {
+		return sqlSession.update(namespace+"userPwCg", registerVo);
+	}
 }

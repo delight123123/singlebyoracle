@@ -39,5 +39,15 @@ public class LoginServiceImpl implements LoginService{
 		return loginDao.userInfoByuserid(userid);
 	}
 
+	@Override
+	public int userPwCg(RegisterVO registerVo) {
+		
+		String salt=loginDao.saltByuserid(registerVo.getUserid());
+		String pw=SHA256Util.getEncrypt(registerVo.getUserpw(), salt);
+		registerVo.setUserpw(pw);
+		
+		return loginDao.userPwCg(registerVo);
+	}
+
 
 }
