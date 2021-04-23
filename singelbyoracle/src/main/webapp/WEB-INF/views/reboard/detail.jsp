@@ -40,9 +40,11 @@
 		</div>
 
 		<div class="text-center">
-		<c:if test="${sessionScope.userid==vo.userid }">
+		<c:if test="${sessionScope.userid==vo.userid  }">
 			<a href
 			='<c:url value="/edit?no=${param.reboardNo}"/>'>수정</a> |
+		</c:if>
+		<c:if test="${sessionScope.userid==vo.userid || sessionScope.auth=='Y'  }">
         	<a id="delA" href
         	='#'>삭제</a> |
 		</c:if>
