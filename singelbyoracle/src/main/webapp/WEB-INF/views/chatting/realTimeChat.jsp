@@ -44,7 +44,7 @@
 <script type="text/javascript">
 
 var userid='${sessionScope.userid}';
-var realTime = new Date();
+
 //var realTime=da.format('yyyy-MM-dd(KS) HH:mm:ss');
 var ws;
 	$(function() {
@@ -89,10 +89,15 @@ var ws;
 
 
 	function send() {
-		var uN = userid;
-		var msg = $("#chatting").val();
-		ws.send("["+realTime+"]"+uN+" : "+msg);
-		$('#chatting').val("");
+		if($('#chatting').val()!=""){
+			var realTime = new Date();
+			realTime=realTime.toLocaleString();
+			var uN = userid;
+			var msg = $("#chatting").val();
+			ws.send("["+realTime+"]"+uN+" : "+msg);
+			$('#chatting').val("");
+		}
+		
 	}
 	
 

@@ -1,9 +1,13 @@
 package com.single.board.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +17,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.single.board.common.ExcelFileCreatUtil;
 import com.single.board.common.PaginationInfo;
 import com.single.board.common.Utility;
 import com.single.board.register.model.MemberListVO;
@@ -27,6 +33,9 @@ public class UserManagementController {
 	
 	@Autowired
 	private RegisterService registerService;
+	
+	@Autowired
+	private ExcelFileCreatUtil excelFileCreatUtil;
 	
 	@RequestMapping("/userManagement")
 	public Object userManagement(@ModelAttribute RegisterVO registerVo, Model model
@@ -131,5 +140,28 @@ public class UserManagementController {
 		model.addAttribute("url", url);
 		
 		return "common/message";
+	}
+	
+	@RequestMapping("/userListExcelDown")
+	public ModelAndView userListExcelDown(HttpSession session) {
+		String auth=(String) session.getAttribute("auth");
+		logger.info("회원 목록 다운로드 권한 auth={}",auth);
+		List<RegisterVO> list=registerService.userAll();
+		
+		logger.info("회원 목록 회원 수 list.size()={}",list.size());
+		
+		SXSSFWorkbook workbook=excelFileCreatUtil.makeExcelDown(list);
+		
+		Map<String, Object> map=new HashMap<String, Object>();
+		
+		map.put("locale", Locale.KOREA);
+		map.put("workbook", workbook);
+		map.put("workbookName", "회원목록");
+		map.put("auth", auth);
+		
+		ModelAndView mav=new ModelAndView("excelDownloadView", map);
+        
+        return mav;
+		
 	}
 }
