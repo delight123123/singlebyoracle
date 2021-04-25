@@ -20,7 +20,7 @@
 			<span class="sp1">조회수</span> <span>${vo.readcount}</span>
 		</div>
 		<div>
-			<span class="sp1">첨부파일</span> 
+			<span class="sp1" style="margin-top: 20px;">첨부파일</span> 
 			<c:if test="${!empty list }">
 				<c:forEach var="vo2" items="${list}">
 					<span>

@@ -83,9 +83,11 @@ public class FileUploadUtil {
 		List<UpfileListVO> list = new ArrayList<UpfileListVO>();
 
 		Iterator<String> iter=fileMap.keySet().iterator();
+		String upPath = getFilePath(request, session);			
 		
 		while(iter.hasNext()) {
 			String key=iter.next();
+			logger.info("key={}",key);
 			MultipartFile upfile=fileMap.get(key);
 			
 			//업로드된 경우
@@ -99,7 +101,7 @@ public class FileUploadUtil {
 
 				// 업로드 처리
 				// 업로드할 경로 구하기
-				String upPath = getFilePath(request, session);				
+					
 
 				File file = new File(upPath, fileName);
 
@@ -134,8 +136,9 @@ public class FileUploadUtil {
 		FileuploadProperties fileProper = new FileuploadProperties();
 		//path = fileProper.getUploadDir();
 		//path = request.getSession().getServletContext().getRealPath(path) + "/" + userid;
-		path = path + "/" + userid;
+		path = "app/uploadfiles" + "/" + userid;
 		path=request.getSession().getServletContext().getRealPath(path);
+		logger.info("path={}",path);
 		File folder=new File(path);
 		if(!folder.exists()) {
 			folder.mkdirs();

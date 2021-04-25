@@ -235,7 +235,7 @@ public class ReboardController {
 		
 		String path=fileuploadUtil.getFilePath(request, session);
 		
-		File file=new File(path, filename);
+		File file=new File(path, vo.getFileName());
 		
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("file", file);
