@@ -179,7 +179,6 @@ $(function() {
 				<td>${vo.userid }
 				</td>
 				<td>${vo.email1 }@${vo.email2 }</td>
-				<td>${vo.gender }</td>
 				<td>
 				<button type="button" class="btn btn-gradient-danger btn-sm">강퇴</button>
 				</td>
