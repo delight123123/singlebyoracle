@@ -93,10 +93,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-log4j2</artifactId>
-		</dependency>
+
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter</artifactId>
@@ -233,6 +230,8 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			
+			
 		</plugins>
 	</build>
 
