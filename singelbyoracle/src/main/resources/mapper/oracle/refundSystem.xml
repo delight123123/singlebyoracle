@@ -64,7 +64,7 @@
 	<update id="refundUpdate" parameterType="int">
 		update tbl_refund
 		set refund_state='Y' , refund_date=sysdate
-		where refund_no=#(refundNo)
+		where refund_no=#{refundNo}
 	</update>
 	
 </mapper>
