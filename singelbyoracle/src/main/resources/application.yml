@@ -15,7 +15,7 @@ spring:  datasource:    driver-class-name: oracle.jdbc.driver.OracleDriver   
       resolve-lazily: true  output:    ansi:      enabled: always
 
 file:
-  upload-dir: /uploadfiles
+  upload-dir: /app/uploadfiles
   
 #mybatis 설정
 mybatis:  configuration:    cache-enabled: true    use-generated-keys: false    map-underscore-to-camel-case: true    jdbc-type-for-null: varchar  mapper-locations:  - classpath:mapper/**/*.xml  type-aliases-package: com.single.board
