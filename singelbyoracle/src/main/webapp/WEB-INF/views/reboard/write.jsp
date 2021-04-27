@@ -178,7 +178,7 @@ $(function() {
 				success:function(res){
 					alert("글등록");
 					$("#insertno").val(res);
-					if($("#divdiv2>input[type=file]").val()){
+					if(!$("#divdiv2>input[type=file]").val()){
 						fileup(res);
 					}
 					location.href="<c:url value='/main'/>";
@@ -198,11 +198,11 @@ $(function() {
 	
 	$("#add").click(function() {
 			if(i==1){
-				$("#frtfilediv").append('<div id="sndfilediv">2. <input type="file" name="upfile1" id="upfile" class="form-control form-control-fw"> </div>');
+				$("#frtfilediv").append('<div id="sndfilediv">2. <input type="file" name="upfile2" id="upfile" class="form-control form-control-fw"> </div>');
 				$("#minus").show();
 				i=2;
 			}else if(i==2){
-				$("#sndfilediv").append('<div id="thdfilediv">3. <input type="file" name="upfile1" id="upfile" class="form-control form-control-fw"> </div>');
+				$("#sndfilediv").append('<div id="thdfilediv">3. <input type="file" name="upfile3" id="upfile" class="form-control form-control-fw"> </div>');
 				i=3;
 				$("#add").hide();
 			}
