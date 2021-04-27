@@ -74,7 +74,7 @@
 									<td>
 									<c:if test="${map['REFUND_STATE']=='N' }">
 										<input type="button" value="환불" class="refundGo">
-										<input type="text" value="${map['REFUND_NO'] }">
+										<input type="hidden" value="${map['REFUND_NO'] }">
 									</c:if>
 									<c:if test="${map['REFUND_STATE']=='Y' }">
 										환불완료
